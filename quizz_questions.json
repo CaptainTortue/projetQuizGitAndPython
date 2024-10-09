@@ -9,7 +9,7 @@
             "c) Mercure",
             "d) Jupiter"
         ],
-        "reponse": "c) Mercure"
+        "reponse": "Mercure"
     },
     {
         "id": 2,
@@ -21,7 +21,7 @@
             "c) Hippopotame",
             "d) Rhinocéros"
         ],
-        "reponse": "b) Eléphant"
+        "reponse": "Eléphant"
     },
     {
         "id": 3,
@@ -33,7 +33,7 @@
             "c) Ford",
             "d) Nissan"
         ],
-        "reponse": "a) Tesla"
+        "reponse": "Tesla"
     },
     {
         "id": 4,
@@ -45,7 +45,7 @@
             "c) Canberra",
             "d) Brisbane"
         ],
-        "reponse": "c) Canberra"
+        "reponse": "Canberra"
     },
     {
         "id": 5,
@@ -57,7 +57,7 @@
             "c) Synonyme",
             "d) Acronyme"
         ],
-        "reponse": "c) Synonyme"
+        "reponse": "Synonyme"
     },
     {
         "id": 6,
@@ -69,7 +69,7 @@
             "c) 64",
             "d) 58"
         ],
-        "reponse": "b) 56"
+        "reponse": "56"
     },
     {
         "id": 7,
@@ -81,7 +81,7 @@
             "c) Néron",
             "d) Caligula"
         ],
-        "reponse": "b) Auguste"
+        "reponse": "Auguste"
     },
     {
         "id": 8,
@@ -93,7 +93,7 @@
             "c) 11",
             "d) 12"
         ],
-        "reponse": "c) 11"
+        "reponse": "11"
     },
     {
         "id": 9,
@@ -105,7 +105,7 @@
             "c) C++",
             "d) Java"
         ],
-        "reponse": "b) JavaScript"
+        "reponse": "JavaScript"
     },
     {
         "id": 10,
@@ -117,7 +117,7 @@
             "c) James Cameron",
             "d) Quentin Tarantino"
         ],
-        "reponse": "c) James Cameron"
+        "reponse": "James Cameron"
     },
     {
         "id": 11,
@@ -129,7 +129,7 @@
             "c) Osmium",
             "d) Oganesson"
         ],
-        "reponse": "a) Oxygène"
+        "reponse": "Oxygène"
     },
     {
         "id": 12,
@@ -141,7 +141,7 @@
             "c) Poulpe",
             "d) Serpent"
         ],
-        "reponse": "b) Caméléon"
+        "reponse": "Caméléon"
     },
     {
         "id": 13,
@@ -153,7 +153,7 @@
             "c) Italie",
             "d) États-Unis"
         ],
-        "reponse": "c) Italie"
+        "reponse": "Italie"
     },
     {
         "id": 14,
@@ -165,7 +165,7 @@
             "c) Europe",
             "d) Amérique du Sud"
         ],
-        "reponse": "b) Asie"
+        "reponse": "Asie"
     },
     {
         "id": 15,
@@ -177,7 +177,7 @@
             "c) Impérative",
             "d) Interrogative"
         ],
-        "reponse": "d) Interrogative"
+        "reponse": "Interrogative"
     },
     {
         "id": 16,
@@ -189,7 +189,7 @@
             "c) 21",
             "d) 23"
         ],
-        "reponse": "b) 19"
+        "reponse": "19"
     },
     {
         "id": 17,
@@ -201,7 +201,7 @@
             "c) 1945",
             "d) 1950"
         ],
-        "reponse": "c) 1945"
+        "reponse": "1945"
     },
     {
         "id": 18,
@@ -213,7 +213,7 @@
             "c) Rugby",
             "d) Tennis"
         ],
-        "reponse": "c) Rugby"
+        "reponse": "Rugby"
     },
     {
         "id": 19,
@@ -225,7 +225,7 @@
             "c) Microsoft",
             "d) IBM"
         ],
-        "reponse": "c) Microsoft"
+        "reponse": "Microsoft"
     },
     {
         "id": 20,
@@ -237,6 +237,6 @@
             "c) Star Wars",
             "d) Matrix"
         ],
-        "reponse": "c) Star Wars"
+        "reponse": "Star Wars"
     }
 ]
