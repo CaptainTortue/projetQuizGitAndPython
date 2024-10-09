@@ -118,5 +118,125 @@
             "d) Quentin Tarantino"
         ],
         "reponse": "c) James Cameron"
+    },
+    {
+        "id": 11,
+        "categorie": "Science",
+        "question": "Quel est l'élément chimique dont le symbole est 'O' ?",
+        "options": [
+            "a) Oxygène",
+            "b) Or",
+            "c) Osmium",
+            "d) Oganesson"
+        ],
+        "reponse": "a) Oxygène"
+    },
+    {
+        "id": 12,
+        "categorie": "Animaux",
+        "question": "Quel animal peut changer de couleur pour se camoufler ?",
+        "options": [
+            "a) Léopard",
+            "b) Caméléon",
+            "c) Poulpe",
+            "d) Serpent"
+        ],
+        "reponse": "b) Caméléon"
+    },
+    {
+        "id": 13,
+        "categorie": "Voitures",
+        "question": "Quel pays est l'origine de la marque automobile 'Ferrari' ?",
+        "options": [
+            "a) Allemagne",
+            "b) Japon",
+            "c) Italie",
+            "d) États-Unis"
+        ],
+        "reponse": "c) Italie"
+    },
+    {
+        "id": 14,
+        "categorie": "Géographie",
+        "question": "Quel est le plus grand continent en superficie ?",
+        "options": [
+            "a) Afrique",
+            "b) Asie",
+            "c) Europe",
+            "d) Amérique du Sud"
+        ],
+        "reponse": "b) Asie"
+    },
+    {
+        "id": 15,
+        "categorie": "Français",
+        "question": "Comment appelle-t-on une phrase qui contient une question ?",
+        "options": [
+            "a) Affirmative",
+            "b) Exclamative",
+            "c) Impérative",
+            "d) Interrogative"
+        ],
+        "reponse": "d) Interrogative"
+    },
+    {
+        "id": 16,
+        "categorie": "Mathématiques",
+        "question": "Quel est le nombre premier le plus proche de 20 ?",
+        "options": [
+            "a) 17",
+            "b) 19",
+            "c) 21",
+            "d) 23"
+        ],
+        "reponse": "b) 19"
+    },
+    {
+        "id": 17,
+        "categorie": "Histoire",
+        "question": "Quelle année a marqué la fin de la Seconde Guerre mondiale ?",
+        "options": [
+            "a) 1939",
+            "b) 1942",
+            "c) 1945",
+            "d) 1950"
+        ],
+        "reponse": "c) 1945"
+    },
+    {
+        "id": 18,
+        "categorie": "Sport",
+        "question": "Quel sport utilise un ballon ovale ?",
+        "options": [
+            "a) Football",
+            "b) Basket-ball",
+            "c) Rugby",
+            "d) Tennis"
+        ],
+        "reponse": "c) Rugby"
+    },
+    {
+        "id": 19,
+        "categorie": "Technologie",
+        "question": "Quelle entreprise a été fondée par Bill Gates et Paul Allen en 1975 ?",
+        "options": [
+            "a) Google",
+            "b) Apple",
+            "c) Microsoft",
+            "d) IBM"
+        ],
+        "reponse": "c) Microsoft"
+    },
+    {
+        "id": 20,
+        "categorie": "Cinéma",
+        "question": "Dans quel film peut-on entendre la phrase 'Que la Force soit avec toi' ?",
+        "options": [
+            "a) Harry Potter",
+            "b) Le Seigneur des Anneaux",
+            "c) Star Wars",
+            "d) Matrix"
+        ],
+        "reponse": "c) Star Wars"
     }
 ]
