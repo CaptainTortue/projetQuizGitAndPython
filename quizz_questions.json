@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "categorie": "Science",
+        "question": "Quelle planète est la plus proche du Soleil ?",
+        "options": [
+            "a) Mars",
+            "b) Vénus",
+            "c) Mercure",
+            "d) Jupiter"
+        ],
+        "reponse": "c) Mercure"
+    },
+    {
+        "id": 2,
+        "categorie": "Animaux",
+        "question": "Quel est le plus grand mammifère terrestre ?",
+        "options": [
+            "a) Girafe",
+            "b) Eléphant",
+            "c) Hippopotame",
+            "d) Rhinocéros"
+        ],
+        "reponse": "b) Eléphant"
+    },
+    {
+        "id": 3,
+        "categorie": "Voitures",
+        "question": "Quelle marque fabrique la voiture 'Model S' ?",
+        "options": [
+            "a) Tesla",
+            "b) BMW",
+            "c) Ford",
+            "d) Nissan"
+        ],
+        "reponse": "a) Tesla"
+    },
+    {
+        "id": 4,
+        "categorie": "Géographie",
+        "question": "Quelle est la capitale de l'Australie ?",
+        "options": [
+            "a) Sydney",
+            "b) Melbourne",
+            "c) Canberra",
+            "d) Brisbane"
+        ],
+        "reponse": "c) Canberra"
+    },
+    {
+        "id": 5,
+        "categorie": "Français",
+        "question": "Comment appelle-t-on un mot qui a le même sens qu'un autre mot ?",
+        "options": [
+            "a) Homonyme",
+            "b) Antonyme",
+            "c) Synonyme",
+            "d) Acronyme"
+        ],
+        "reponse": "c) Synonyme"
+    },
+    {
+        "id": 6,
+        "categorie": "Mathématiques",
+        "question": "Combien font 8 × 7 ?",
+        "options": [
+            "a) 54",
+            "b) 56",
+            "c) 64",
+            "d) 58"
+        ],
+        "reponse": "b) 56"
+    },
+    {
+        "id": 7,
+        "categorie": "Histoire",
+        "question": "Qui était le premier empereur de Rome ?",
+        "options": [
+            "a) Jules César",
+            "b) Auguste",
+            "c) Néron",
+            "d) Caligula"
+        ],
+        "reponse": "b) Auguste"
+    },
+    {
+        "id": 8,
+        "categorie": "Sport",
+        "question": "Combien de joueurs composent une équipe de football sur le terrain ?",
+        "options": [
+            "a) 9",
+            "b) 10",
+            "c) 11",
+            "d) 12"
+        ],
+        "reponse": "c) 11"
+    },
+    {
+        "id": 9,
+        "categorie": "Technologie",
+        "question": "Quel est le langage de programmation principalement utilisé pour créer des pages web interactives ?",
+        "options": [
+            "a) Python",
+            "b) JavaScript",
+            "c) C++",
+            "d) Java"
+        ],
+        "reponse": "b) JavaScript"
+    },
+    {
+        "id": 10,
+        "categorie": "Cinéma",
+        "question": "Qui a réalisé le film 'Titanic' sorti en 1997 ?",
+        "options": [
+            "a) Steven Spielberg",
+            "b) Martin Scorsese",
+            "c) James Cameron",
+            "d) Quentin Tarantino"
+        ],
+        "reponse": "c) James Cameron"
+    }
+]
