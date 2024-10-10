@@ -4,19 +4,7 @@ import pygame
 import json
 import random
 
-with open('quizz_questions.json', encoding='utf-8') as questions_file:
-    listQuestions = json.load(questions_file)
-
-def randomQuestion():
-    idQuestion = random.randint(1, len(listQuestions))
-    if listQuestions[idQuestion] in listQuestions:
-        return listQuestions[idQuestion]
-    else:
-        return "Erreur de choix de la question"
-
 print("Bienvenue dans le jeu de quiz!")
-question = randomQuestion()
-print(question)
 
 # pygame setup
 pygame.init()
@@ -29,6 +17,11 @@ running = True
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
+red = (255, 0, 0)
+
+
+# create the display surface object
+# of specific dimension..e(screen_width, screen_height).
 BLACK = (0, 0, 0)
 
 # assigning values to X and Y variable
@@ -66,7 +59,6 @@ listQuestions = [
 # of specific dimension..e(X, Y).
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-
 # set the pygame window name
 pygame.display.set_caption('Show Text')
 
@@ -76,51 +68,94 @@ pygame.display.set_caption('Show Text')
 # 2nd parameter is size of the font
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-# create a text surface object for the question
-text = font.render(listQuestions[0]["question"], True, green, blue)
+with open('quizz_questions.json', encoding='utf-8') as questions_file:
+    listQuestions = json.load(questions_file)
 
-# create a rectangular object for the
-# text surface object
-textRect = text.get_rect()
+def randomQuestion():
+    idQuestion = random.randint(1, len(listQuestions)-1)
+    if listQuestions[idQuestion] in listQuestions:
+        return listQuestions[idQuestion]
+    else:
+        return "Erreur de choix de la question"
+questions = randomQuestion()
+
+def refreshQuestion():
+    question = randomQuestion()
+    text = font.render(question["question"], True, green, blue)
+    textRect = text.get_rect()
+    textRect.center = (screen_width // 2, screen_height // 6)
+    options = []
+    optionsRect = []
+    for i in range(len(question["options"])):
+        option = font.render(question["options"][i], True, white, green)
+        optionRect = pygame.Rect((screen_width//8 if i%2 == 0 else (screen_width//6)*4), screen_height // 6 + ((i // 2)+1) * screen_height // 4, screen_width // 4, screen_height // 6)
+        options.append(option)
+        optionsRect.append(optionRect)
+    responses = []
+    responsesRect = []
+    for i in range(len(question["options"])):
+        response = font.render(question["options"][i], True, green, blue)
+        responseRect = pygame.Rect(screen_width // 2, screen_height // 6 + (i + 1) * 50, screen_width // 4, screen_height // 6)
+        responses.append(response)
+        responsesRect.append(responseRect)
+    return question, text, textRect, options, optionsRect, responses, responsesRect
+
+question, text, textRect, options, optionsRect, response, responseRect = refreshQuestion()
+
+def displayRect(rect, color):
+    pygame.draw.rect(screen, color, rect)
+    # set the correctRect bigger
+    rect.inflate_ip(10, 10)
+    # refresh center of the rect
+    rect.center = (screen_width // 2, screen_height // 2)
+    if rect.width >= screen_width and rect.height >= screen_height:
+        # refresh the question
+        question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion()
+        rect.width = screen_width // 2
+        rect.height = screen_height // 2
+        return False
+    return True
+
+
+score = 0
+displayCorrectAnimation = False
+displayIncorrectAnimation = False
+
+# create green rect for correct answer animation
+correctRect = pygame.Rect(screen_width // 4, screen_height // 6, screen_width // 2, screen_height // 6)
+
+# create red rect for incorrect answer animation
+incorrectRect = pygame.Rect(screen_width // 4, screen_height // 6, screen_width // 2, screen_height // 6)
 
 # Durée du timer (en millisecondes) 
 start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
 timer_duration = 30 * 1000  # 30 secondes en millisecondes
-
-# create a rectangular object for each option possible
-options = []
-optionsRect = []
-for i in range(len(listQuestions[0]["options"])):
-    option = font.render(listQuestions[0]["options"][i], True, white, green)
-    #optionRect = option.get_rect()
-    #print(Y // 6 + (i // 2)+1 * 50)
-    #optionRect.center = ((X//4 if i%2 == 0 else (X//4)*3), Y // 6 + ((i // 2)+1) * Y // 4)
-    optionRect= pygame.Rect((screen_width//8 if i%2 == 0 else (screen_width//6)*4), screen_height // 6 + ((i // 2)+1) * screen_height // 4, screen_width // 4, screen_height // 6)
-    options.append(option)
-    optionsRect.append(optionRect)
-
-# create a rectangular object for the response
-responses = []
-responsesRect = []
-for i in range(len(listQuestions[0]["options"])):
-    response = font.render(listQuestions[0]["options"][i], True, green, blue)
-    # create rect object for the question, with big size
-    responseRect = pygame.Rect(screen_width // 2, screen_height // 6 + (i + 1) * 50, screen_width // 4, screen_height // 6)
-    responses.append(response)
-    responsesRect.append(responseRect)
-
-# set the center of the rectangular object.
-textRect.center = (screen_width // 2, screen_height // 6)
 
 while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
 
     # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+    # pygame.QUIT event means the user clicked screen_width to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # check if the mouse click was within the bounds of the option
+            for i in range(len(optionsRect)):
+                if optionsRect[i].collidepoint(event.pos):
+                    # check if the option clicked is the correct answer
+                    if listQuestions[0]["options"][i] == listQuestions[0]["reponse"]:
+                        print("Correct!")
+                        score += 1
+                        displayCorrectAnimation = True
+                    else:
+                        print("Incorrect!")
+                        displayIncorrectAnimation = True
+                    # display the correct answer
+                    #for j in range(len(responses)):
+                    #    screen.blit(responses[j], responsesRect[j])
+
     # Calculer le temps écoulé
     elapsed_time = pygame.time.get_ticks() - start_ticks
 
@@ -149,6 +184,24 @@ while running:
         # draw text
         screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2, optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
     # RENDER YOUR GAME HERE
+    if (displayCorrectAnimation):
+        displayCorrectAnimation = displayRect(correctRect, green)
+    elif (displayIncorrectAnimation):
+        displayIncorrectAnimation = displayRect(incorrectRect, red)
+    else:
+        # copying the text surface object
+        # to the display question
+        screen.blit(text, textRect)
+
+        # copying the text surface object
+        # to the display options
+        for i in range(len(options)):
+            # add text to the screen and rect distinctly
+            # display rect for each option
+            pygame.draw.rect(screen, green, optionsRect[i])
+            # draw text
+            screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2, optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
+        # RENDER YOUR GAME HERE
 
     # flip() the display to put your work on screen
     pygame.display.flip()
