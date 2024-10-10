@@ -14,9 +14,9 @@ def randomQuestion():
     else:
         return "Erreur de choix de la question"
 
- print("Bienvenue dans le jeu de quiz!")
- question = randomQuestion()
- print(question)
+print("Bienvenue dans le jeu de quiz!")
+question = randomQuestion()
+print(question)
 
 # pygame setup
 pygame.init()
