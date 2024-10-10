@@ -121,7 +121,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
     # Calculer le temps écoulé
     elapsed_time = pygame.time.get_ticks() - start_ticks
 
@@ -137,7 +136,6 @@ while running:
         fin_text = font.render("Temps écoulé!", True, BLACK)
         screen.blit(fin_text, (screen_width // 2 - 150, screen_height // 2 + 30))
 
-    
     # copying the text surface object
     # to the display question
     screen.blit(text, textRect)
