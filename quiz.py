@@ -135,7 +135,7 @@ while running:
     if time_left <= 0:
         fin_text = font.render("Temps écoulé!", True, BLACK)
         screen.blit(fin_text, (screen_width/50,screen_height/15))
-
+ 
     # copying the text surface object
     # to the display question
     screen.blit(text, textRect)
