@@ -164,13 +164,13 @@ while running:
 
     # Afficher le timer restant
     timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
-    screen.blit(timer_text, (screen_width // 2 - 150, screen_height // 2 - 30))
+    screen.blit(timer_text, (screen_width/50,screen_height/50))
 
     # Si le temps est écoulé
     if time_left <= 0:
         fin_text = font.render("Temps écoulé!", True, BLACK)
-        screen.blit(fin_text, (screen_width // 2 - 150, screen_height // 2 + 30))
-
+        screen.blit(fin_text, (screen_width/50,screen_height/15))
+ 
     # copying the text surface object
     # to the display question
     screen.blit(text, textRect)
