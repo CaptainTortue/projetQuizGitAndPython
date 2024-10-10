@@ -105,7 +105,7 @@ question, text, textRect, options, optionsRect, response, responseRect = refresh
 def displayRect(rect, color):
     pygame.draw.rect(screen, color, rect)
     # set the correctRect bigger
-    rect.inflate_ip(10, 10)
+    rect.inflate_ip(40, 40)
     # refresh center of the rect
     rect.center = (screen_width // 2, screen_height // 2)
     if rect.width >= screen_width and rect.height >= screen_height:
@@ -113,6 +113,7 @@ def displayRect(rect, color):
         question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion()
         rect.width = screen_width // 2
         rect.height = screen_height // 2
+        rect.center = (screen_width // 2, screen_height // 2)
         return False
     return True
 
@@ -122,10 +123,12 @@ displayCorrectAnimation = False
 displayIncorrectAnimation = False
 
 # create green rect for correct answer animation
-correctRect = pygame.Rect(screen_width // 4, screen_height // 6, screen_width // 2, screen_height // 6)
+correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
+correctRect.center = (screen_width // 2, screen_height // 2)
 
 # create red rect for incorrect answer animation
-incorrectRect = pygame.Rect(screen_width // 4, screen_height // 6, screen_width // 2, screen_height // 6)
+incorrectRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
+incorrectRect.center = (screen_width // 2, screen_height // 2)
 
 # Durée du timer (en millisecondes) 
 start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
