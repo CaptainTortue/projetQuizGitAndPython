@@ -66,8 +66,13 @@ pygame.display.set_caption('Show Text')
 # 2nd parameter is size of the font
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-def refreshQuestion():
-    question = randomQuestion()
+questions = randomQuestion()
+
+numberQuestion = 0
+
+def refreshQuestion(numQuestion):
+    print(numberQuestion)
+    question = questions[numQuestion]
     text = font.render(question["question"], True, green, blue)
     textRect = text.get_rect()
     textRect.center = (screen_width // 2, screen_height // 6)
@@ -87,7 +92,7 @@ def refreshQuestion():
         responsesRect.append(responseRect)
     return question, text, textRect, options, optionsRect, responses, responsesRect
 
-question, text, textRect, options, optionsRect, response, responseRect = refreshQuestion()
+question, text, textRect, options, optionsRect, response, responseRect = refreshQuestion(numberQuestion)
 
 def displayRect(rect, color):
     pygame.draw.rect(screen, color, rect)
@@ -97,7 +102,8 @@ def displayRect(rect, color):
     rect.center = (screen_width // 2, screen_height // 2)
     if rect.width >= screen_width and rect.height >= screen_height:
         # refresh the question
-        question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion()
+        global question, text, textRect, options, optionsRect, responses, responsesRect
+        question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion(numberQuestion)
         rect.width = screen_width // 2
         rect.height = screen_height // 2
         rect.center = (screen_width // 2, screen_height // 2)
@@ -134,6 +140,7 @@ while running:
             # check if the mouse click was within the bounds of the option
             for i in range(len(optionsRect)):
                 if optionsRect[i].collidepoint(event.pos):
+                    numberQuestion += 1
                     # check if the option clicked is the correct answer
                     if listQuestions[0]["options"][i] == listQuestions[0]["reponse"]:
                         print("Correct!")
