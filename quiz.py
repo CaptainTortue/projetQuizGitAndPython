@@ -4,6 +4,31 @@ import pygame
 import json
 import random
 
+with open('quizz_questions.json', encoding='utf-8') as questions_file:
+    listQuestions = json.load(questions_file)
+
+def randomQuestion():
+    # Sélectionne tous les catégories
+    categories = []
+    for category in range(0, len(listQuestions) - 1 ):
+        categories.append(listQuestions[category]['categorie'])
+
+    # Filtrage pour avoir qu'une question pour 1 catégorie
+    listCategories = []
+    for category in categories:
+        if category not in listCategories:
+            listCategories.append(category)
+
+    # lister un questionnaire avec 1 catégorie de chaque aléatoirement
+    questionnaire = []
+    for question in range(0, len(listQuestions) - 1):
+        idQuestion = random.randint(0, len(listQuestions) - 1)
+        if listQuestions[idQuestion]['categorie'] not in questionnaire:
+            questionnaire.append(listQuestions[idQuestion])
+        else:
+            print("La catégorie existe déjà")
+    return questionnaire
+
 print("Bienvenue dans le jeu de quiz!")
 
 # pygame setup
@@ -28,33 +53,6 @@ BLACK = (0, 0, 0)
 screen_width = 1280
 screen_height = 720
 
-listQuestions = [
-    {
-        "id": 1,
-        "categorie": "Science",
-        "question": "Quelle planète est la plus proche du Soleil ?",
-        "options": [
-            "a) Mars",
-            "b) Vénus",
-            "c) Mercure",
-            "d) Jupiter"
-        ],
-        "reponse": "c) Mercure"
-    },
-    {
-        "id": 2,
-        "categorie": "Animaux",
-        "question": "Quel est le plus grand mammifère terrestre ?",
-        "options": [
-            "a) Girafe",
-            "b) Eléphant",
-            "c) Hippopotame",
-            "d) Rhinocéros"
-        ],
-        "reponse": "b) Eléphant"
-    }
-]
-
 # create the display surface object
 # of specific dimension..e(X, Y).
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -68,19 +66,13 @@ pygame.display.set_caption('Show Text')
 # 2nd parameter is size of the font
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-with open('quizz_questions.json', encoding='utf-8') as questions_file:
-    listQuestions = json.load(questions_file)
-
-def randomQuestion():
-    idQuestion = random.randint(1, len(listQuestions)-1)
-    if listQuestions[idQuestion] in listQuestions:
-        return listQuestions[idQuestion]
-    else:
-        return "Erreur de choix de la question"
 questions = randomQuestion()
 
-def refreshQuestion():
-    question = randomQuestion()
+numberQuestion = 0
+
+def refreshQuestion(numQuestion):
+    print(numberQuestion)
+    question = questions[numQuestion]
     text = font.render(question["question"], True, green, blue)
     textRect = text.get_rect()
     textRect.center = (screen_width // 2, screen_height // 6)
@@ -100,7 +92,7 @@ def refreshQuestion():
         responsesRect.append(responseRect)
     return question, text, textRect, options, optionsRect, responses, responsesRect
 
-question, text, textRect, options, optionsRect, response, responseRect = refreshQuestion()
+question, text, textRect, options, optionsRect, response, responseRect = refreshQuestion(numberQuestion)
 
 def displayRect(rect, color):
     pygame.draw.rect(screen, color, rect)
@@ -110,7 +102,8 @@ def displayRect(rect, color):
     rect.center = (screen_width // 2, screen_height // 2)
     if rect.width >= screen_width and rect.height >= screen_height:
         # refresh the question
-        question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion()
+        global question, text, textRect, options, optionsRect, responses, responsesRect
+        question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion(numberQuestion)
         rect.width = screen_width // 2
         rect.height = screen_height // 2
         rect.center = (screen_width // 2, screen_height // 2)
@@ -147,6 +140,7 @@ while running:
             # check if the mouse click was within the bounds of the option
             for i in range(len(optionsRect)):
                 if optionsRect[i].collidepoint(event.pos):
+                    numberQuestion += 1
                     # check if the option clicked is the correct answer
                     if listQuestions[0]["options"][i] == listQuestions[0]["reponse"]:
                         print("Correct!")

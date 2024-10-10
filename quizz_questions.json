@@ -4,10 +4,10 @@
         "categorie": "Science",
         "question": "Quelle planète est la plus proche du Soleil ?",
         "options": [
-            "a) Mars",
-            "b) Vénus",
-            "c) Mercure",
-            "d) Jupiter"
+            "Mars",
+            "Vénus",
+            "Mercure",
+            "Jupiter"
         ],
         "reponse": "Mercure"
     },
@@ -16,10 +16,10 @@
         "categorie": "Animaux",
         "question": "Quel est le plus grand mammifère terrestre ?",
         "options": [
-            "a) Girafe",
-            "b) Eléphant",
-            "c) Hippopotame",
-            "d) Rhinocéros"
+            "Girafe",
+            "Eléphant",
+            "Hippopotame",
+            "Rhinocéros"
         ],
         "reponse": "Eléphant"
     },
@@ -28,10 +28,10 @@
         "categorie": "Voitures",
         "question": "Quelle marque fabrique la voiture 'Model S' ?",
         "options": [
-            "a) Tesla",
-            "b) BMW",
-            "c) Ford",
-            "d) Nissan"
+            "Tesla",
+            "BMW",
+            "Ford",
+            "Nissan"
         ],
         "reponse": "Tesla"
     },
@@ -40,10 +40,10 @@
         "categorie": "Géographie",
         "question": "Quelle est la capitale de l'Australie ?",
         "options": [
-            "a) Sydney",
-            "b) Melbourne",
-            "c) Canberra",
-            "d) Brisbane"
+            "Sydney",
+            "Melbourne",
+            "Canberra",
+            "Brisbane"
         ],
         "reponse": "Canberra"
     },
@@ -52,10 +52,10 @@
         "categorie": "Français",
         "question": "Comment appelle-t-on un mot qui a le même sens qu'un autre mot ?",
         "options": [
-            "a) Homonyme",
-            "b) Antonyme",
-            "c) Synonyme",
-            "d) Acronyme"
+            "Homonyme",
+            "Antonyme",
+            "Synonyme",
+            "Acronyme"
         ],
         "reponse": "Synonyme"
     },
@@ -64,10 +64,10 @@
         "categorie": "Mathématiques",
         "question": "Combien font 8 × 7 ?",
         "options": [
-            "a) 54",
-            "b) 56",
-            "c) 64",
-            "d) 58"
+            "54",
+            "56",
+            "64",
+            "58"
         ],
         "reponse": "56"
     },
@@ -76,10 +76,10 @@
         "categorie": "Histoire",
         "question": "Qui était le premier empereur de Rome ?",
         "options": [
-            "a) Jules César",
-            "b) Auguste",
-            "c) Néron",
-            "d) Caligula"
+            "Jules César",
+            "Auguste",
+            "Néron",
+            "Caligula"
         ],
         "reponse": "Auguste"
     },
@@ -88,10 +88,10 @@
         "categorie": "Sport",
         "question": "Combien de joueurs composent une équipe de football sur le terrain ?",
         "options": [
-            "a) 9",
-            "b) 10",
-            "c) 11",
-            "d) 12"
+            "9",
+            "10",
+            "11",
+            "12"
         ],
         "reponse": "11"
     },
@@ -100,10 +100,10 @@
         "categorie": "Technologie",
         "question": "Quel est le langage de programmation principalement utilisé pour créer des pages web interactives ?",
         "options": [
-            "a) Python",
-            "b) JavaScript",
-            "c) C++",
-            "d) Java"
+            "Python",
+            "JavaScript",
+            "C++",
+            "Java"
         ],
         "reponse": "JavaScript"
     },
@@ -112,10 +112,10 @@
         "categorie": "Cinéma",
         "question": "Qui a réalisé le film 'Titanic' sorti en 1997 ?",
         "options": [
-            "a) Steven Spielberg",
-            "b) Martin Scorsese",
-            "c) James Cameron",
-            "d) Quentin Tarantino"
+            "Steven Spielberg",
+            "Martin Scorsese",
+            "James Cameron",
+            "Quentin Tarantino"
         ],
         "reponse": "James Cameron"
     },
@@ -124,10 +124,10 @@
         "categorie": "Science",
         "question": "Quel est l'élément chimique dont le symbole est 'O' ?",
         "options": [
-            "a) Oxygène",
-            "b) Or",
-            "c) Osmium",
-            "d) Oganesson"
+            "Oxygène",
+            "Or",
+            "Osmium",
+            "Oganesson"
         ],
         "reponse": "Oxygène"
     },
@@ -136,10 +136,10 @@
         "categorie": "Animaux",
         "question": "Quel animal peut changer de couleur pour se camoufler ?",
         "options": [
-            "a) Léopard",
-            "b) Caméléon",
-            "c) Poulpe",
-            "d) Serpent"
+            "Léopard",
+            "Caméléon",
+            "Poulpe",
+            "Serpent"
         ],
         "reponse": "Caméléon"
     },
@@ -148,10 +148,10 @@
         "categorie": "Voitures",
         "question": "Quel pays est l'origine de la marque automobile 'Ferrari' ?",
         "options": [
-            "a) Allemagne",
-            "b) Japon",
-            "c) Italie",
-            "d) États-Unis"
+            "Allemagne",
+            "Japon",
+            "Italie",
+            "États-Unis"
         ],
         "reponse": "Italie"
     },
@@ -160,10 +160,10 @@
         "categorie": "Géographie",
         "question": "Quel est le plus grand continent en superficie ?",
         "options": [
-            "a) Afrique",
-            "b) Asie",
-            "c) Europe",
-            "d) Amérique du Sud"
+            "Afrique",
+            "Asie",
+            "Europe",
+            "Amérique du Sud"
         ],
         "reponse": "Asie"
     },
@@ -172,10 +172,10 @@
         "categorie": "Français",
         "question": "Comment appelle-t-on une phrase qui contient une question ?",
         "options": [
-            "a) Affirmative",
-            "b) Exclamative",
-            "c) Impérative",
-            "d) Interrogative"
+            "Affirmative",
+            "Exclamative",
+            "Impérative",
+            "Interrogative"
         ],
         "reponse": "Interrogative"
     },
@@ -184,10 +184,10 @@
         "categorie": "Mathématiques",
         "question": "Quel est le nombre premier le plus proche de 20 ?",
         "options": [
-            "a) 17",
-            "b) 19",
-            "c) 21",
-            "d) 23"
+            "17",
+            "19",
+            "21",
+            "23"
         ],
         "reponse": "19"
     },
@@ -196,10 +196,10 @@
         "categorie": "Histoire",
         "question": "Quelle année a marqué la fin de la Seconde Guerre mondiale ?",
         "options": [
-            "a) 1939",
-            "b) 1942",
-            "c) 1945",
-            "d) 1950"
+            "1939",
+            "1942",
+            "1945",
+            "1950"
         ],
         "reponse": "1945"
     },
@@ -208,10 +208,10 @@
         "categorie": "Sport",
         "question": "Quel sport utilise un ballon ovale ?",
         "options": [
-            "a) Football",
-            "b) Basket-ball",
-            "c) Rugby",
-            "d) Tennis"
+            "Football",
+            "Basket-ball",
+            "Rugby",
+            "Tennis"
         ],
         "reponse": "Rugby"
     },
@@ -220,10 +220,10 @@
         "categorie": "Technologie",
         "question": "Quelle entreprise a été fondée par Bill Gates et Paul Allen en 1975 ?",
         "options": [
-            "a) Google",
-            "b) Apple",
-            "c) Microsoft",
-            "d) IBM"
+            "Google",
+            "Apple",
+            "Microsoft",
+            "IBM"
         ],
         "reponse": "Microsoft"
     },
@@ -232,10 +232,10 @@
         "categorie": "Cinéma",
         "question": "Dans quel film peut-on entendre la phrase 'Que la Force soit avec toi' ?",
         "options": [
-            "a) Harry Potter",
-            "b) Le Seigneur des Anneaux",
-            "c) Star Wars",
-            "d) Matrix"
+            "Harry Potter",
+            "Le Seigneur des Anneaux",
+            "Star Wars",
+            "Matrix"
         ],
         "reponse": "Star Wars"
     }
