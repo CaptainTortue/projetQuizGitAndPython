@@ -29,10 +29,11 @@ running = True
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
+BLACK = (0, 0, 0)
 
 # assigning values to X and Y variable
-X = 1280
-Y = 720
+screen_width = 1280
+screen_height = 720
 
 listQuestions = [
     {
@@ -63,7 +64,7 @@ listQuestions = [
 
 # create the display surface object
 # of specific dimension..e(X, Y).
-screen = pygame.display.set_mode((X, Y))
+screen = pygame.display.set_mode((screen_width, screen_height))
 
 
 # set the pygame window name
@@ -82,6 +83,10 @@ text = font.render(listQuestions[0]["question"], True, green, blue)
 # text surface object
 textRect = text.get_rect()
 
+# Durée du timer (en millisecondes) 
+start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
+timer_duration = 30 * 1000  # 30 secondes en millisecondes
+
 # create a rectangular object for each option possible
 options = []
 optionsRect = []
@@ -90,7 +95,7 @@ for i in range(len(listQuestions[0]["options"])):
     #optionRect = option.get_rect()
     #print(Y // 6 + (i // 2)+1 * 50)
     #optionRect.center = ((X//4 if i%2 == 0 else (X//4)*3), Y // 6 + ((i // 2)+1) * Y // 4)
-    optionRect= pygame.Rect((X//8 if i%2 == 0 else (X//6)*4), Y // 6 + ((i // 2)+1) * Y // 4, X // 4, Y // 6)
+    optionRect= pygame.Rect((screen_width//8 if i%2 == 0 else (screen_width//6)*4), screen_height // 6 + ((i // 2)+1) * screen_height // 4, screen_width // 4, screen_height // 6)
     options.append(option)
     optionsRect.append(optionRect)
 
@@ -100,12 +105,12 @@ responsesRect = []
 for i in range(len(listQuestions[0]["options"])):
     response = font.render(listQuestions[0]["options"][i], True, green, blue)
     # create rect object for the question, with big size
-    responseRect = pygame.Rect(X // 2, Y // 6 + (i + 1) * 50, X // 4, Y // 6)
+    responseRect = pygame.Rect(screen_width // 2, screen_height // 6 + (i + 1) * 50, screen_width // 4, screen_height // 6)
     responses.append(response)
     responsesRect.append(responseRect)
 
 # set the center of the rectangular object.
-textRect.center = (X // 2, Y // 6)
+textRect.center = (screen_width // 2, screen_height // 6)
 
 while running:
     # fill the screen with a color to wipe away anything from last frame
@@ -116,7 +121,20 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    # Calculer le temps écoulé
+    elapsed_time = pygame.time.get_ticks() - start_ticks
 
+    # Calcul du temps restant
+    time_left = max(0, timer_duration - elapsed_time) // 1000  # En secondes
+
+    # Afficher le timer restant
+    timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
+    screen.blit(timer_text, (screen_width // 2 - 150, screen_height // 2 - 30))
+
+    # Si le temps est écoulé
+    if time_left <= 0:
+        fin_text = font.render("Temps écoulé!", True, BLACK)
+        screen.blit(fin_text, (screen_width // 2 - 150, screen_height // 2 + 30))
 
     # copying the text surface object
     # to the display question
