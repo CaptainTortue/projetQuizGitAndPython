@@ -8,15 +8,28 @@ with open('quizz_questions.json', encoding='utf-8') as questions_file:
     listQuestions = json.load(questions_file)
 
 def randomQuestion():
-    idQuestion = random.randint(1, len(listQuestions))
-    if listQuestions[idQuestion] in listQuestions:
-        return listQuestions[idQuestion]
-    else:
-        return "Erreur de choix de la question"
+    # Sélectionne tous les catégories
+    categories = []
+    for category in range(0, len(listQuestions) - 1 ):
+        categories.append(listQuestions[category]['categorie'])
+
+    # Filtrage pour avoir qu'une question pour 1 catégorie
+    listCategories = []
+    for category in categories:
+        if category not in listCategories:
+            listCategories.append(category)
+
+    # lister un questionnaire avec 1 catégorie de chaque aléatoirement
+    questionnaire = []
+    for question in range(0, len(listQuestions) - 1):
+        idQuestion = random.randint(0, len(listQuestions) - 1)
+        if listQuestions[idQuestion]['categorie'] not in questionnaire:
+            questionnaire.append(listQuestions[idQuestion])
+        else:
+            print("La catégorie existe déjà")
+    return questionnaire
 
 print("Bienvenue dans le jeu de quiz!")
-question = randomQuestion()
-print(question)
 
 # pygame setup
 pygame.init()
@@ -34,33 +47,6 @@ blue = (0, 0, 128)
 X = 1280
 Y = 720
 
-listQuestions = [
-    {
-        "id": 1,
-        "categorie": "Science",
-        "question": "Quelle planète est la plus proche du Soleil ?",
-        "options": [
-            "a) Mars",
-            "b) Vénus",
-            "c) Mercure",
-            "d) Jupiter"
-        ],
-        "reponse": "c) Mercure"
-    },
-    {
-        "id": 2,
-        "categorie": "Animaux",
-        "question": "Quel est le plus grand mammifère terrestre ?",
-        "options": [
-            "a) Girafe",
-            "b) Eléphant",
-            "c) Hippopotame",
-            "d) Rhinocéros"
-        ],
-        "reponse": "b) Eléphant"
-    }
-]
-
 # create the display surface object
 # of specific dimension..e(X, Y).
 screen = pygame.display.set_mode((X, Y))
@@ -75,8 +61,13 @@ pygame.display.set_caption('Show Text')
 # 2nd parameter is size of the font
 font = pygame.font.Font('freesansbold.ttf', 32)
 
+# Récupération du résultat du randomQuestion()
+questions = randomQuestion()
+print(questions[0])
+print(questions[1])
+
 # create a text surface object for the question
-text = font.render(listQuestions[0]["question"], True, green, blue)
+text = font.render(questions[0]["question"], True, green, blue)
 
 # create a rectangular object for the
 # text surface object
@@ -85,8 +76,8 @@ textRect = text.get_rect()
 # create a rectangular object for each option possible
 options = []
 optionsRect = []
-for i in range(len(listQuestions[0]["options"])):
-    option = font.render(listQuestions[0]["options"][i], True, white, green)
+for i in range(len(questions[0]["options"])):
+    option = font.render(questions[0]["options"][i], True, white, green)
     #optionRect = option.get_rect()
     #print(Y // 6 + (i // 2)+1 * 50)
     #optionRect.center = ((X//4 if i%2 == 0 else (X//4)*3), Y // 6 + ((i // 2)+1) * Y // 4)
@@ -97,8 +88,8 @@ for i in range(len(listQuestions[0]["options"])):
 # create a rectangular object for the response
 responses = []
 responsesRect = []
-for i in range(len(listQuestions[0]["options"])):
-    response = font.render(listQuestions[0]["options"][i], True, green, blue)
+for i in range(len(questions[0]["options"])):
+    response = font.render(questions[0]["options"][i], True, green, blue)
     # create rect object for the question, with big size
     responseRect = pygame.Rect(X // 2, Y // 6 + (i + 1) * 50, X // 4, Y // 6)
     responses.append(response)
