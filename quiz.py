@@ -72,6 +72,8 @@ questions = randomQuestion()
 
 numberQuestion = 0
 
+importVar = 0
+
 def refreshQuestion(numQuestion):
     if numQuestion >= len(questions):
         global isEnd
@@ -143,6 +145,7 @@ timer_duration = 30 * 1000  # 30 secondes en millisecondes
 combo = 0
 
 while running:
+
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
 
@@ -150,7 +153,8 @@ while running:
     elapsed_time = pygame.time.get_ticks() - start_ticks
 
     # Calculer le temps écoulé
-    elapsed_time_total = pygame.time.get_ticks() - start_ticks_total
+    if not (isEnd):
+        elapsed_time_total = pygame.time.get_ticks() - start_ticks_total
 
 
     # Calcul du temps restant
@@ -174,7 +178,7 @@ while running:
                           print(question["options"][i], question["reponse"])
                           print("Correct!")
                           temp_score = 10
-                          if (time_left > 28 ) : 
+                          if (time_left > 28 ) :
                               temp_score *= 2
                           temp_score += time_left
                           temp_score += combo * 2
@@ -204,11 +208,11 @@ while running:
         fin_text = font.render("Temps écoulé!", True, BLACK)
         screen.blit(fin_text, (screen_width/50,screen_height/15))
 
-    #ajout du text score total  
+    #ajout du text score total
     Score_text = font.render(f"Score : {score}",True,BLACK)
     screen.blit(Score_text, (screen_width/1.2,screen_height/50))
 
- 
+
     # copying the text surface object
     # to the display question
     if (textRect and text):
@@ -240,13 +244,14 @@ while running:
         screen.fill(BLACK)
         end_text = font.render(f"Partie fini !!! Score: {score}. ", True, white)
         screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2, screen_height // 2 - end_text.get_rect().height // 2))
-
+        # asking the function importdatajson.py to create and update our JSON
+        if(importVar ==0):
+            importJSON(["elapsed_time_total", "USERNAME", "score"], [elapsed_time_total, "USERNAME", score])
+            importVar = 1
     # flip() the display to put your work on screen
     pygame.display.flip()
 
-    #asking the function importdatajson.py to create and update our JSON
 
-    importJSON(["elapsed_time_total", "USERNAME","score"] ,[elapsed_time_total, "USERNAME",score] )
 
     clock.tick(60)  # limits FPS to 60
 

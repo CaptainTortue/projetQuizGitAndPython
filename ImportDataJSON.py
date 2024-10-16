@@ -25,4 +25,3 @@ def importJSON(categories, inputs):
     with open('finalscore_data.json', 'w') as outfile:
         json.dump(data1, outfile, indent=4)
 
-importJSON(["timer", "name", "score"], ["10", "uwu","69"])
