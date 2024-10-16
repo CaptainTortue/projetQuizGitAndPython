@@ -65,23 +65,28 @@ pygame.display.set_caption('Show Text')
 # which is present in pygame.
 # 2nd parameter is size of the font
 font = pygame.font.Font('freesansbold.ttf', 32)
+miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
 questions = randomQuestion()
 
 numberQuestion = 0
 
 def refreshQuestion(numQuestion):
-    print(numberQuestion)
     question = questions[numQuestion]
     text = font.render(question["question"], True, green, blue)
     textRect = text.get_rect()
+    if (textRect.width > screen_width):
+        text = miniFont.render(question["question"], True, green, blue)
+        textRect = text.get_rect()
     textRect.center = (screen_width // 2, screen_height // 6)
     options = []
     optionsRect = []
     for i in range(len(question["options"])):
         option = font.render(question["options"][i], True, white, green)
         optionRect = pygame.Rect((screen_width//8 if i%2 == 0 else (screen_width//6)*4), screen_height // 6 + ((i // 2)+1) * screen_height // 4, screen_width // 4, screen_height // 6)
-
+        # if option text rect is bigger than the option rect, set text in txo ligne
+        if option.get_rect().width > optionRect.width:
+            option = miniFont.render(question["options"][i], True, white, green)
         options.append(option)
         optionsRect.append(optionRect)
     responses = []
@@ -128,7 +133,6 @@ incorrectRect.center = (screen_width // 2, screen_height // 2)
 start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
 timer_duration = 30 * 1000  # 30 secondes en millisecondes
 
-print(questions)
 while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
@@ -145,7 +149,6 @@ while running:
                     numberQuestion += 1
                     # check if the option clicked is the correct answer
                     if question["options"][i] == question["reponse"]:
-                        print(question["options"][i], question["reponse"])
                         print("Correct!")
                         score += 1
                         displayCorrectAnimation = True
