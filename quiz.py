@@ -21,12 +21,31 @@ def randomQuestion():
 
     # lister un questionnaire avec 1 catégorie de chaque aléatoirement
     questionnaire = []
-    for question in range(0, len(listQuestions) - 1):
+
+    # Initialisation de la première question dans le questionnaire
+    idFirstQuestion = random.randint(0, len(listQuestions) - 1)
+    questionnaire.append(listQuestions[idFirstQuestion])
+
+    trueFalse = False
+
+    # Boucle pour que le questionnaire soit de taille max 10
+    while len(questionnaire) < 10 :
         idQuestion = random.randint(0, len(listQuestions) - 1)
-        if listQuestions[idQuestion]['categorie'] not in questionnaire:
+        for question in questionnaire:
+            # Vérification de l'existance d'une catégorie et id dans le questionnaire
+            # si True alors la question peut-être ajoutée sinon False
+            if listQuestions[idQuestion]["categorie"] != question["categorie"]:
+                if listQuestions[idQuestion]["id"] != question["id"]:
+                    trueFalse = True
+                else :
+                    trueFalse = False
+                    break
+            else:
+                trueFalse = False
+                break
+        if trueFalse :
             questionnaire.append(listQuestions[idQuestion])
-        else:
-            print("La catégorie existe déjà")
+
     return questionnaire
 
 print("Bienvenue dans le jeu de quiz!")
@@ -68,10 +87,12 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 
 questions = randomQuestion()
 
+for i in range(len(questions) - 1):
+    print(questions[i]['id'], " ", questions[i]['categorie'] )
+
 numberQuestion = 0
 
 def refreshQuestion(numQuestion):
-    print(numberQuestion)
     question = questions[numQuestion]
     text = font.render(question["question"], True, green, blue)
     textRect = text.get_rect()
@@ -128,7 +149,6 @@ incorrectRect.center = (screen_width // 2, screen_height // 2)
 start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
 timer_duration = 30 * 1000  # 30 secondes en millisecondes
 
-print(questions)
 while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
