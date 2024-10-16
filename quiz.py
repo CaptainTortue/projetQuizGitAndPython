@@ -2,6 +2,7 @@
 import pygame
 
 import json
+from  ImportDataJSON import importJSON
 import random
 
 with open('quizz_questions.json', encoding='utf-8') as questions_file:
@@ -126,6 +127,7 @@ incorrectRect.center = (screen_width // 2, screen_height // 2)
 
 # Durée du timer (en millisecondes) 
 start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
+start_ticks_total = pygame.time.get_ticks() # Temps de démarage pour le temp total
 timer_duration = 30 * 1000  # 30 secondes en millisecondes
 combo = 0
 
@@ -135,6 +137,10 @@ while running:
 
     # Calculer le temps écoulé
     elapsed_time = pygame.time.get_ticks() - start_ticks
+
+    # Calculer le temps écoulé
+    elapsed_time_total = pygame.time.get_ticks() - start_ticks_total
+
 
     # Calcul du temps restant
     time_left = max(0, timer_duration - elapsed_time) // 1000  # En secondes
@@ -224,6 +230,10 @@ while running:
 
     # flip() the display to put your work on screen
     pygame.display.flip()
+
+    #asking the function importdatajson.py to create and update our JSON
+
+    importJSON(["elapsed_time_total", "USERNAME","score"] ,[elapsed_time_total, "USERNAME",score] )
 
     clock.tick(60)  # limits FPS to 60
 

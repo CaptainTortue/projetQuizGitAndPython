@@ -1,22 +1,4 @@
-"""import json
-import os
-def importJSON(categories, inputs):
-    JSON_DATA = '{}'
-    data = json.loads(JSON_DATA)
 
-    for x in range(len(inputs)):
-        data[categories[x]] = inputs[x]
-        inputs.append(x)
-
-    with open('finalscore_data.json', 'r') as outfile:
-        data1 = json.load(outfile)
-
-    data1.append(data)
-
-    with open('finalscore_data.json', 'w') as outfile:
-        json.dump(data1, outfile, indent=4)
-
-importJSON(["timer", "name"], ["10", "aeaeaea"])"""
 import json
 import os
 
