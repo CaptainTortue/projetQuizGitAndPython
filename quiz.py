@@ -182,8 +182,11 @@ while running:
 
     # Si le temps est écoulé
     if time_left <= 0:
-        fin_text = font.render("Temps écoulé!", True, BLACK)
-        screen.blit(fin_text, (screen_width/50,screen_height/15))
+        combo=0
+        displayIncorrectAnimation = True
+        numberQuestion+=1
+        start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+
 
     #ajout du text score total  
     Score_text = font.render(f"Score : {score}",True,BLACK)
