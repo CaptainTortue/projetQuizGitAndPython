@@ -81,6 +81,7 @@ def refreshQuestion(numQuestion):
     for i in range(len(question["options"])):
         option = font.render(question["options"][i], True, white, green)
         optionRect = pygame.Rect((screen_width//8 if i%2 == 0 else (screen_width//6)*4), screen_height // 6 + ((i // 2)+1) * screen_height // 4, screen_width // 4, screen_height // 6)
+
         options.append(option)
         optionsRect.append(optionRect)
     responses = []
@@ -127,6 +128,7 @@ incorrectRect.center = (screen_width // 2, screen_height // 2)
 start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
 timer_duration = 30 * 1000  # 30 secondes en millisecondes
 
+print(questions)
 while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
@@ -142,7 +144,8 @@ while running:
                 if optionsRect[i].collidepoint(event.pos):
                     numberQuestion += 1
                     # check if the option clicked is the correct answer
-                    if listQuestions[0]["options"][i] == listQuestions[0]["reponse"]:
+                    if question["options"][i] == question["reponse"]:
+                        print(question["options"][i], question["reponse"])
                         print("Correct!")
                         score += 1
                         displayCorrectAnimation = True
