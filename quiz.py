@@ -65,23 +65,32 @@ pygame.display.set_caption('Show Text')
 # which is present in pygame.
 # 2nd parameter is size of the font
 font = pygame.font.Font('freesansbold.ttf', 32)
+miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
 questions = randomQuestion()
 
 numberQuestion = 0
 
 def refreshQuestion(numQuestion):
-    print(numberQuestion)
+    if numQuestion >= len(questions):
+        global isEnd
+        isEnd = True
+        return None, None, None, None, None, None, None
     question = questions[numQuestion]
     text = font.render(question["question"], True, green, blue)
     textRect = text.get_rect()
+    if (textRect.width > screen_width):
+        text = miniFont.render(question["question"], True, green, blue)
+        textRect = text.get_rect()
     textRect.center = (screen_width // 2, screen_height // 6)
     options = []
     optionsRect = []
     for i in range(len(question["options"])):
         option = font.render(question["options"][i], True, white, green)
         optionRect = pygame.Rect((screen_width//8 if i%2 == 0 else (screen_width//6)*4), screen_height // 6 + ((i // 2)+1) * screen_height // 4, screen_width // 4, screen_height // 6)
-
+        # if option text rect is bigger than the option rect, set text in txo ligne
+        if option.get_rect().width > optionRect.width:
+            option = miniFont.render(question["options"][i], True, white, green)
         options.append(option)
         optionsRect.append(optionRect)
     responses = []
@@ -116,6 +125,8 @@ score = 0
 displayCorrectAnimation = False
 displayIncorrectAnimation = False
 
+isEnd = False
+
 # create green rect for correct answer animation
 correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
 correctRect.center = (screen_width // 2, screen_height // 2)
@@ -145,35 +156,37 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
+            if (isEnd):
+                running = False
             # check if the mouse click was within the bounds of the option
-            for i in range(len(optionsRect)):
-                if optionsRect[i].collidepoint(event.pos):
-                    numberQuestion += 1
-                    # check if the option clicked is the correct answer
-                    if question["options"][i] == question["reponse"]:
-                        print(question["options"][i], question["reponse"])
-                        print("Correct!")
-                        temp_score = 10
-                        if (time_left > 28 ) : 
-                            temp_score *= 2
-                        temp_score += time_left
-                        temp_score += combo * 2
-                        score += temp_score
+            if (optionsRect and options):
+              for i in range(len(optionsRect)):
+                  if optionsRect[i].collidepoint(event.pos):
+                      numberQuestion += 1
+                      # check if the option clicked is the correct answer
+                      if question["options"][i] == question["reponse"]:
+                          print(question["options"][i], question["reponse"])
+                          print("Correct!")
+                          temp_score = 10
+                          if (time_left > 28 ) : 
+                              temp_score *= 2
+                          temp_score += time_left
+                          temp_score += combo * 2
+                          score += temp_score
 
-                        displayCorrectAnimation = True
-                        combo+=1
-                        start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+                          displayCorrectAnimation = True
+                          combo+=1
+                          start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
 
-                    else:
-                        print("Incorrect!")
-                        combo=0
-                        displayIncorrectAnimation = True
-                        start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+                      else:
+                          print("Incorrect!")
+                          combo=0
+                          displayIncorrectAnimation = True
+                          start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
 
-                    # display the correct answer
-                    #for j in range(len(responses)):
-                    #    screen.blit(responses[j], responsesRect[j])
-
+                      # display the correct answer
+                      #for j in range(len(responses)):
+                      #    screen.blit(responses[j], responsesRect[j])
 
 
     # Afficher le timer restant
@@ -192,17 +205,10 @@ while running:
  
     # copying the text surface object
     # to the display question
-    screen.blit(text, textRect)
+    if (textRect and text):
+        screen.blit(text, textRect)
 
-    # copying the text surface object
-    # to the display options
-    for i in range(len(options)):
-        # add text to the screen and rect distinctly
-        # display rect for each option
-        pygame.draw.rect(screen, green, optionsRect[i])
-        # draw text
-        screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2, optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
-    # RENDER YOUR GAME HERE
+   # RENDER YOUR GAME HERE
     if (displayCorrectAnimation):
         displayCorrectAnimation = displayRect(correctRect, green)
     elif (displayIncorrectAnimation):
@@ -210,17 +216,24 @@ while running:
     else:
         # copying the text surface object
         # to the display question
-        screen.blit(text, textRect)
+        if (textRect and text):
+            screen.blit(text, textRect)
 
         # copying the text surface object
         # to the display options
-        for i in range(len(options)):
-            # add text to the screen and rect distinctly
-            # display rect for each option
-            pygame.draw.rect(screen, green, optionsRect[i])
-            # draw text
-            screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2, optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
+        if (optionsRect and options):
+            for i in range(len(options)):
+                # add text to the screen and rect distinctly
+                # display rect for each option
+                pygame.draw.rect(screen, green, optionsRect[i])
+                # draw text
+                screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2, optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
         # RENDER YOUR GAME HERE
+
+    if (isEnd):
+        screen.fill(BLACK)
+        end_text = font.render(f"Partie fini !!! Score: {score}. ", True, white)
+        screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2, screen_height // 2 - end_text.get_rect().height // 2))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
