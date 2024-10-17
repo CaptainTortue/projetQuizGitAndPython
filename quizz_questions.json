@@ -1,242 +1,322 @@
 [
     {
-        "id": 1,
-        "categorie": "Science",
-        "question": "Quelle planète est la plus proche du Soleil ?",
-        "options": [
-            "Mars",
-            "Vénus",
-            "Mercure",
-            "Jupiter"
-        ],
-        "reponse": "Mercure"
+      "id": 1,
+      "categorie": "Science",
+      "question": "Quelle planète est la plus proche du Soleil ?",
+      "options": ["Mars", "Vénus", "Mercure", "Jupiter"],
+      "reponse": "Mercure",
+      "level": 1
     },
     {
-        "id": 2,
-        "categorie": "Animaux",
-        "question": "Quel est le plus grand mammifère terrestre ?",
-        "options": [
-            "Girafe",
-            "Eléphant",
-            "Hippopotame",
-            "Rhinocéros"
-        ],
-        "reponse": "Eléphant"
+      "id": 2,
+      "categorie": "Animaux",
+      "question": "Quel est le plus grand mammifère terrestre ?",
+      "options": ["Girafe", "Eléphant", "Hippopotame", "Rhinocéros"],
+      "reponse": "Eléphant",
+      "level": 1
     },
     {
-        "id": 3,
-        "categorie": "Voitures",
-        "question": "Quelle marque fabrique la voiture 'Model S' ?",
-        "options": [
-            "Tesla",
-            "BMW",
-            "Ford",
-            "Nissan"
-        ],
-        "reponse": "Tesla"
+      "id": 3,
+      "categorie": "Voitures",
+      "question": "Quelle marque fabrique la voiture 'Model S' ?",
+      "options": ["Tesla", "BMW", "Ford", "Nissan"],
+      "reponse": "Tesla",
+      "level": 1
     },
     {
-        "id": 4,
-        "categorie": "Géographie",
-        "question": "Quelle est la capitale de l'Australie ?",
-        "options": [
-            "Sydney",
-            "Melbourne",
-            "Canberra",
-            "Brisbane"
-        ],
-        "reponse": "Canberra"
+      "id": 4,
+      "categorie": "Géographie",
+      "question": "Quelle est la capitale de l'Australie ?",
+      "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      "reponse": "Canberra",
+      "level": 1
     },
     {
-        "id": 5,
-        "categorie": "Français",
-        "question": "Comment appelle-t-on un mot qui a le même sens qu'un autre mot ?",
-        "options": [
-            "Homonyme",
-            "Antonyme",
-            "Synonyme",
-            "Acronyme"
-        ],
-        "reponse": "Synonyme"
+      "id": 5,
+      "categorie": "Français",
+      "question": "Comment appelle-t-on un mot qui a le même sens qu'un autre mot ?",
+      "options": ["Homonyme", "Antonyme", "Synonyme", "Acronyme"],
+      "reponse": "Synonyme",
+      "level": 1
     },
     {
-        "id": 6,
-        "categorie": "Mathématiques",
-        "question": "Combien font 8 × 7 ?",
-        "options": [
-            "54",
-            "56",
-            "64",
-            "58"
-        ],
-        "reponse": "56"
+      "id": 6,
+      "categorie": "Mathématiques",
+      "question": "Combien font 8 × 7 ?",
+      "options": ["54", "56", "64", "58"],
+      "reponse": "56",
+      "level": 1
     },
     {
-        "id": 7,
-        "categorie": "Histoire",
-        "question": "Qui était le premier empereur de Rome ?",
-        "options": [
-            "Jules César",
-            "Auguste",
-            "Néron",
-            "Caligula"
-        ],
-        "reponse": "Auguste"
+      "id": 7,
+      "categorie": "Histoire",
+      "question": "Qui était le premier empereur de Rome ?",
+      "options": ["Jules César", "Auguste", "Néron", "Caligula"],
+      "reponse": "Auguste",
+      "level": 1
     },
     {
-        "id": 8,
-        "categorie": "Sport",
-        "question": "Combien de joueurs composent une équipe de football sur le terrain ?",
-        "options": [
-            "9",
-            "10",
-            "11",
-            "12"
-        ],
-        "reponse": "11"
+      "id": 8,
+      "categorie": "Sport",
+      "question": "Combien de joueurs composent une équipe de football sur le terrain ?",
+      "options": ["9", "10", "11", "12"],
+      "reponse": "11",
+      "level": 1
     },
     {
-        "id": 9,
-        "categorie": "Technologie",
-        "question": "Quel est le langage de programmation principalement utilisé pour créer des pages web interactives ?",
-        "options": [
-            "Python",
-            "JavaScript",
-            "C++",
-            "Java"
-        ],
-        "reponse": "JavaScript"
+      "id": 9,
+      "categorie": "Technologie",
+      "question": "Quel est le langage de programmation principalement utilisé pour créer des pages web interactives ?",
+      "options": ["Python", "JavaScript", "C++", "Java"],
+      "reponse": "JavaScript",
+      "level": 1
     },
     {
-        "id": 10,
-        "categorie": "Cinéma",
-        "question": "Qui a réalisé le film 'Titanic' sorti en 1997 ?",
-        "options": [
-            "Steven Spielberg",
-            "Martin Scorsese",
-            "James Cameron",
-            "Quentin Tarantino"
-        ],
-        "reponse": "James Cameron"
+      "id": 10,
+      "categorie": "Cinéma",
+      "question": "Qui a réalisé le film 'Titanic' sorti en 1997 ?",
+      "options": ["Steven Spielberg", "Martin Scorsese", "James Cameron", "Quentin Tarantino"],
+      "reponse": "James Cameron",
+      "level": 1
     },
     {
-        "id": 11,
-        "categorie": "Science",
-        "question": "Quel est l'élément chimique dont le symbole est 'O' ?",
-        "options": [
-            "Oxygène",
-            "Or",
-            "Osmium",
-            "Oganesson"
-        ],
-        "reponse": "Oxygène"
+      "id": 11,
+      "categorie": "Science",
+      "question": "Quel est l'élément chimique dont le symbole est 'O' ?",
+      "options": ["Oxygène", "Or", "Osmium", "Oganesson"],
+      "reponse": "Oxygène",
+      "level": 2
     },
     {
-        "id": 12,
-        "categorie": "Animaux",
-        "question": "Quel animal peut changer de couleur pour se camoufler ?",
-        "options": [
-            "Léopard",
-            "Caméléon",
-            "Poulpe",
-            "Serpent"
-        ],
-        "reponse": "Caméléon"
+      "id": 12,
+      "categorie": "Animaux",
+      "question": "Quel animal peut changer de couleur pour se camoufler ?",
+      "options": ["Léopard", "Caméléon", "Poulpe", "Serpent"],
+      "reponse": "Caméléon",
+      "level": 2
     },
     {
-        "id": 13,
-        "categorie": "Voitures",
-        "question": "Quel pays est l'origine de la marque automobile 'Ferrari' ?",
-        "options": [
-            "Allemagne",
-            "Japon",
-            "Italie",
-            "États-Unis"
-        ],
-        "reponse": "Italie"
+      "id": 13,
+      "categorie": "Voitures",
+      "question": "Quel pays est l'origine de la marque automobile 'Ferrari' ?",
+      "options": ["Allemagne", "Japon", "Italie", "États-Unis"],
+      "reponse": "Italie",
+      "level": 2
     },
     {
-        "id": 14,
-        "categorie": "Géographie",
-        "question": "Quel est le plus grand continent en superficie ?",
-        "options": [
-            "Afrique",
-            "Asie",
-            "Europe",
-            "Amérique du Sud"
-        ],
-        "reponse": "Asie"
+      "id": 14,
+      "categorie": "Géographie",
+      "question": "Quel est le plus grand continent en superficie ?",
+      "options": ["Afrique", "Asie", "Europe", "Amérique du Sud"],
+      "reponse": "Asie",
+      "level": 2
     },
     {
-        "id": 15,
-        "categorie": "Français",
-        "question": "Comment appelle-t-on une phrase qui contient une question ?",
-        "options": [
-            "Affirmative",
-            "Exclamative",
-            "Impérative",
-            "Interrogative"
-        ],
-        "reponse": "Interrogative"
+      "id": 15,
+      "categorie": "Français",
+      "question": "Comment appelle-t-on une phrase qui contient une question ?",
+      "options": ["Affirmative", "Exclamative", "Impérative", "Interrogative"],
+      "reponse": "Interrogative",
+      "level": 2
     },
     {
-        "id": 16,
-        "categorie": "Mathématiques",
-        "question": "Quel est le nombre premier le plus proche de 20 ?",
-        "options": [
-            "17",
-            "19",
-            "21",
-            "23"
-        ],
-        "reponse": "19"
+      "id": 16,
+      "categorie": "Mathématiques",
+      "question": "Quel est le nombre premier le plus proche de 20 ?",
+      "options": ["17", "19", "21", "23"],
+      "reponse": "19",
+      "level": 2
     },
     {
-        "id": 17,
-        "categorie": "Histoire",
-        "question": "Quelle année a marqué la fin de la Seconde Guerre mondiale ?",
-        "options": [
-            "1939",
-            "1942",
-            "1945",
-            "1950"
-        ],
-        "reponse": "1945"
+      "id": 17,
+      "categorie": "Histoire",
+      "question": "Quelle année a marqué la fin de la Seconde Guerre mondiale ?",
+      "options": ["1939", "1942", "1945", "1950"],
+      "reponse": "1945",
+      "level": 2
     },
     {
-        "id": 18,
-        "categorie": "Sport",
-        "question": "Quel sport utilise un ballon ovale ?",
-        "options": [
-            "Football",
-            "Basket-ball",
-            "Rugby",
-            "Tennis"
-        ],
-        "reponse": "Rugby"
+      "id": 18,
+      "categorie": "Sport",
+      "question": "Quel sport utilise un ballon ovale ?",
+      "options": ["Football", "Basket-ball", "Rugby", "Tennis"],
+      "reponse": "Rugby",
+      "level": 2
     },
     {
-        "id": 19,
-        "categorie": "Technologie",
-        "question": "Quelle entreprise a été fondée par Bill Gates et Paul Allen en 1975 ?",
-        "options": [
-            "Google",
-            "Apple",
-            "Microsoft",
-            "IBM"
-        ],
-        "reponse": "Microsoft"
+      "id": 19,
+      "categorie": "Technologie",
+      "question": "Quelle entreprise a été fondée par Bill Gates et Paul Allen en 1975 ?",
+      "options": ["Google", "Apple", "Microsoft", "IBM"],
+      "reponse": "Microsoft",
+      "level": 2
     },
     {
-        "id": 20,
-        "categorie": "Cinéma",
-        "question": "Dans quel film peut-on entendre la phrase 'Que la Force soit avec toi' ?",
-        "options": [
-            "Harry Potter",
-            "Le Seigneur des Anneaux",
-            "Star Wars",
-            "Matrix"
-        ],
-        "reponse": "Star Wars"
+      "id": 20,
+      "categorie": "Cinéma",
+      "question": "Dans quel film peut-on entendre la phrase 'Que la Force soit avec toi' ?",
+      "options": ["Harry Potter", "Le Seigneur des Anneaux", "Star Wars", "Matrix"],
+      "reponse": "Star Wars",
+      "level": 2
+    },
+    {
+      "id": 21,
+      "categorie": "Science",
+      "question": "Quel est le plus grand organe du corps humain ?",
+      "options": ["Le foie", "La peau", "Le cœur", "Les poumons"],
+      "reponse": "La peau",
+      "level": 3
+    },
+    {
+      "id": 22,
+      "categorie": "Animaux",
+      "question": "Quel est l'oiseau le plus rapide en vol ?",
+      "options": ["Faucon pèlerin", "Aigle royal", "Condor", "Autruche"],
+      "reponse": "Faucon pèlerin",
+      "level": 3
+    },
+    {
+      "id": 23,
+      "categorie": "Voitures",
+      "question": "Quelle marque automobile possède le logo avec un cheval cabré ?",
+      "options": ["Porsche", "Ferrari", "Lamborghini", "Maserati"],
+      "reponse": "Ferrari",
+      "level": 3
+    },
+    {
+      "id": 24,
+      "categorie": "Géographie",
+      "question": "Quel est le plus long fleuve du monde ?",
+      "options": ["Amazone", "Nil", "Yangzi Jiang", "Mississippi"],
+      "reponse": "Amazone",
+      "level": 3
+    },
+    {
+      "id": 25,
+      "categorie": "Français",
+      "question": "Quel est le plus long mot de la langue française ?",
+      "options": ["Anticonstitutionnellement", "Inconstitutionnellement", "Institutionnellement", "Internationalisation"],
+      "reponse": "Anticonstitutionnellement",
+      "level": 3
+    },
+    {
+      "id": 26,
+      "categorie": "Mathématiques",
+      "question": "Quel est le carré de 15 ?",
+      "options": ["200", "210", "225", "235"],
+      "reponse": "225",
+      "level": 3
+    },
+    {
+      "id": 27,
+      "categorie": "Histoire",
+      "question": "Quelle civilisation a construit les pyramides de Gizeh ?",
+      "options": ["Babyloniens", "Égyptiens", "Mayas", "Aztèques"],
+      "reponse": "Égyptiens",
+      "level": 3
+    },
+    {
+      "id": 28,
+      "categorie": "Sport",
+      "question": "Quel est le nombre total de médailles remportées par Michael Phelps aux Jeux Olympiques ?",
+      "options": ["22", "23", "24", "25"],
+      "reponse": "23",
+      "level": 3
+    },
+    {
+      "id": 29,
+      "categorie": "Technologie",
+      "question": "Quelle est la vitesse de la lumière ?",
+      "options": ["299 792 458 m/s", "200 000 000 m/s", "300 000 km/h", "1 079 252 849 km/h"],
+      "reponse": "299 792 458 m/s",
+      "level": 3
+    },
+    {
+      "id": 30,
+      "categorie": "Cinéma",
+      "question": "Quel film a remporté l'Oscar du meilleur film en 2020 ?",
+      "options": ["Joker", "Parasite", "1917", "Once Upon a Time in Hollywood"],
+      "reponse": "Parasite",
+      "level": 3
+    },
+    {
+      "id": 31,
+      "categorie": "Science",
+      "question": "Quel est le métal liquide à température ambiante ?",
+      "options": ["Mercure", "Plomb", "Argent", "Aluminium"],
+      "reponse": "Mercure",
+      "level": 4
+    },
+    {
+      "id": 32,
+      "categorie": "Animaux",
+      "question": "Quel est le plus grand prédateur des océans ?",
+      "options": ["Orque", "Requin blanc", "Cachalot", "Dauphin"],
+      "reponse": "Orque",
+      "level": 4
+    },
+    {
+      "id": 33,
+      "categorie": "Voitures",
+      "question": "Quelle marque a produit la voiture la plus rapide du monde en 2020 ?",
+      "options": ["Bugatti", "Koenigsegg", "McLaren", "Tesla"],
+      "reponse": "Bugatti",
+      "level": 4
+    },
+    {
+      "id": 34,
+      "categorie": "Géographie",
+      "question": "Quel est le pays avec la plus grande population au monde ?",
+      "options": ["Inde", "Chine", "États-Unis", "Indonésie"],
+      "reponse": "Chine",
+      "level": 4
+    },
+    {
+      "id": 35,
+      "categorie": "Français",
+      "question": "Quel est le temps utilisé pour exprimer une action future dans le passé en français ?",
+      "options": ["Conditionnel présent", "Conditionnel passé", "Futur antérieur", "Subjonctif imparfait"],
+      "reponse": "Conditionnel présent",
+      "level": 4
+    },
+    {
+      "id": 36,
+      "categorie": "Mathématiques",
+      "question": "Quel est le résultat de l'intégrale de la fonction constante 1 entre 0 et 1 ?",
+      "options": ["0", "1", "2", "0.5"],
+      "reponse": "1",
+      "level": 4
+    },
+    {
+      "id": 37,
+      "categorie": "Histoire",
+      "question": "Quelle bataille a marqué la défaite finale de Napoléon Bonaparte ?",
+      "options": ["Bataille d'Austerlitz", "Bataille de Trafalgar", "Bataille de Waterloo", "Bataille de Leipzig"],
+      "reponse": "Bataille de Waterloo",
+      "level": 4
+    },
+    {
+      "id": 38,
+      "categorie": "Sport",
+      "question": "Quelle équipe de football a remporté la Coupe du monde en 2018 ?",
+      "options": ["Brésil", "Allemagne", "France", "Argentine"],
+      "reponse": "France",
+      "level": 4
+    },
+    {
+      "id": 39,
+      "categorie": "Technologie",
+      "question": "En quelle année l'iPhone a-t-il été lancé pour la première fois ?",
+      "options": ["2005", "2006", "2007", "2008"],
+      "reponse": "2007",
+      "level": 4
+    },
+    {
+      "id": 40,
+      "categorie": "Cinéma",
+      "question": "Quel réalisateur est connu pour le film 'Inception' ?",
+      "options": ["Christopher Nolan", "Steven Spielberg", "Martin Scorsese", "Ridley Scott"],
+      "reponse": "Christopher Nolan",
+      "level": 4
     }
 ]
