@@ -165,56 +165,153 @@ start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
 start_ticks_total = pygame.time.get_ticks() # Temps de démarage pour le temp total
 timer_duration = 30 * 1000  # 30 secondes en millisecondes
 combo = 0
+# Variable to track the username input
+username = ""
+username_input_active = True  # The game starts with the username input screen
 
+# Main game loop
 while running:
 
-    # fill the screen with a color to wipe away anything from last frame
+    # If we're still on the username input screen
+    if username_input_active:
+        # Fill the screen with a color
+        screen.fill(BLACK)
+
+        # Display the input prompt
+        input_prompt = font.render("Enter your username: ", True, white)
+        screen.blit(input_prompt, (screen_width // 4, screen_height // 3))
+
+        # Display the current username being typed
+        typed_username = font.render(username, True, green)
+        screen.blit(typed_username, (screen_width // 4, screen_height // 2))
+
+        pygame.display.flip()
+
+        # Handle events for username input
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN and username != "":  # Submit only if username isn't empty
+                    username_input_active = False  # Move to the quiz
+                elif event.key == pygame.K_BACKSPACE:
+                    username = username[:-1]  # Remove last character
+                else:
+                    username += event.unicode  # Append typed character
+
+        # Skip the rest of the loop until username is entered
+        continue
+
+    # At this point, the username has been entered, and the quiz begins
     screen.fill("purple")
 
-    # Calculer le temps écoulé
+    # Calculate elapsed time
     elapsed_time = pygame.time.get_ticks() - start_ticks
 
-    # Calculer le temps écoulé
-    if not (isEnd):
+    # Calculate total elapsed time if the quiz hasn't ended
+    if not isEnd:
         elapsed_time_total = pygame.time.get_ticks() - start_ticks_total
 
+    # Calculate remaining time
+    time_left = max(0, timer_duration - elapsed_time) // 1000  # In seconds
 
-    # Calcul du temps restant
-    time_left = max(0, timer_duration - elapsed_time) // 1000  # En secondes
-
-    # poll for events
-    # pygame.QUIT event means the user clicked screen_width to close your window
+    # Poll for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if (isEnd):
+            if isEnd:
                 running = False
-            # check if the mouse click was within the bounds of the option
-            if (optionsRect and options):
-              for i in range(len(optionsRect)):
-                  if optionsRect[i].collidepoint(event.pos):
-                      numberQuestion += 1
-                      # check if the option clicked is the correct answer
-                      if question["options"][i] == question["reponse"]:
-                          print(question["options"][i], question["reponse"])
-                          print("Correct!")
-                          temp_score = 10
-                          if (time_left > 28 ) :
-                              temp_score *= 2
-                          temp_score += time_left
-                          temp_score += combo * 2
-                          score += temp_score
+            # Check if the mouse click was within the bounds of the options
+            if optionsRect and options:
+                for i in range(len(optionsRect)):
+                    if optionsRect[i].collidepoint(event.pos):
+                        numberQuestion += 1
+                        # Check if the clicked option is the correct answer
+                        if question["options"][i] == question["reponse"]:
+                            print(question["options"][i], question["reponse"])
+                            print("Correct!")
+                            temp_score = 10
+                            if time_left > 28:
+                                temp_score *= 2
+                            temp_score += time_left
+                            temp_score += combo * 2
+                            score += temp_score
 
-                          displayCorrectAnimation = True
-                          combo+=1
-                          start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+                            displayCorrectAnimation = True
+                            combo += 1
+                            start_ticks = pygame.time.get_ticks() + 1000  # Reset the start ticks
 
-                      else:
-                          print("Incorrect!")
-                          combo=0
-                          displayIncorrectAnimation = True
-                          start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+                        else:
+                            print("Incorrect!")
+                            combo = 0
+                            displayIncorrectAnimation = True
+                            start_ticks = pygame.time.get_ticks() + 1000  # Reset the start ticks
+
+    # Display the timer
+    timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
+    screen.blit(timer_text, (screen_width / 50, screen_height / 50))
+
+    # Display the username at the top of the screen during the quiz
+    username_display = font.render(f"Player: {username}", True, white)
+    screen.blit(username_display, (screen_width / 50, screen_height / 15))
+
+
+
+
+
+
+
+#
+# while running:
+#
+#     # fill the screen with a color to wipe away anything from last frame
+#     screen.fill("purple")
+#
+#     # Calculer le temps écoulé
+#     elapsed_time = pygame.time.get_ticks() - start_ticks
+#
+#     # Calculer le temps écoulé
+#     if not (isEnd):
+#         elapsed_time_total = pygame.time.get_ticks() - start_ticks_total
+#
+#
+#     # Calcul du temps restant
+#     time_left = max(0, timer_duration - elapsed_time) // 1000  # En secondes
+#
+#     # poll for events
+#     # pygame.QUIT event means the user clicked screen_width to close your window
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
+#         if event.type == pygame.MOUSEBUTTONDOWN:
+#             if (isEnd):
+#                 running = False
+#             # check if the mouse click was within the bounds of the option
+#             if (optionsRect and options):
+#               for i in range(len(optionsRect)):
+#                   if optionsRect[i].collidepoint(event.pos):
+#                       numberQuestion += 1
+#                       # check if the option clicked is the correct answer
+#                       if question["options"][i] == question["reponse"]:
+#                           print(question["options"][i], question["reponse"])
+#                           print("Correct!")
+#                           temp_score = 10
+#                           if (time_left > 28 ) :
+#                               temp_score *= 2
+#                           temp_score += time_left
+#                           temp_score += combo * 2
+#                           score += temp_score
+#
+#                           displayCorrectAnimation = True
+#                           combo+=1
+#                           start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+#
+#                       else:
+#                           print("Incorrect!")
+#                           combo=0
+#                           displayIncorrectAnimation = True
+#                           start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
 
                       # display the correct answer
                       #for j in range(len(responses)):
@@ -271,7 +368,7 @@ while running:
         screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2, screen_height // 2 - end_text.get_rect().height // 2))
         # asking the function importdatajson.py to create and update our JSON
         if(importVar ==0):
-            importJSON(["elapsed_time_total", "USERNAME", "score"], [elapsed_time_total, "USERNAME", score])
+            importJSON(["elapsed_time_total", "USERNAME", "score"], [elapsed_time_total, username, score])
             importVar = 1
     # flip() the display to put your work on screen
     pygame.display.flip()
