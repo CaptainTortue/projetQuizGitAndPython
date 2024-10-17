@@ -174,7 +174,7 @@ def main():
     numberQuestion = 0
     score = 0
     isEnd = False
-    questions = randomQuestion()
+    questions = randomQuestion(1)
 
     # Timer
     start_ticks = pygame.time.get_ticks()
