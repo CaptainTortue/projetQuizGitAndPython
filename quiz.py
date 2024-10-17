@@ -103,13 +103,10 @@ miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
 questions = randomQuestion(1) # Le 1 doit être changé par une variable qui tourne entre 1 à 4
 
-numberQuestion = 0
-
-def refreshQuestion(numQuestion):
+def refreshQuestion(numQuestion, questions):
+    print("refresh question", numQuestion)
     if numQuestion >= len(questions):
-        global isEnd
-        isEnd = True
-        return None, None, None, None, None, None, None
+        return None, None, None, None, None, True # set isEnd to False
     question = questions[numQuestion]
     text = font.render(question["question"], True, green, blue)
     textRect = text.get_rect()
@@ -127,18 +124,9 @@ def refreshQuestion(numQuestion):
             option = miniFont.render(question["options"][i], True, white, green)
         options.append(option)
         optionsRect.append(optionRect)
-    responses = []
-    responsesRect = []
-    for i in range(len(question["options"])):
-        response = font.render(question["options"][i], True, green, blue)
-        responseRect = pygame.Rect(screen_width // 2, screen_height // 6 + (i + 1) * 50, screen_width // 4, screen_height // 6)
-        responses.append(response)
-        responsesRect.append(responseRect)
-    return question, text, textRect, options, optionsRect, responses, responsesRect
+    return question, text, textRect, options, optionsRect, False
 
-question, text, textRect, options, optionsRect, response, responseRect = refreshQuestion(numberQuestion)
-
-def displayRect(rect, color):
+def displayRect(rect, color, question, text, textRect, options, optionsRect, numQuestion, isEnd):
     pygame.draw.rect(screen, color, rect)
     # set the correctRect bigger
     rect.inflate_ip(40, 40)
@@ -146,135 +134,125 @@ def displayRect(rect, color):
     rect.center = (screen_width // 2, screen_height // 2)
     if rect.width >= screen_width and rect.height >= screen_height:
         # refresh the question
-        global question, text, textRect, options, optionsRect, responses, responsesRect
-        question, text, textRect, options, optionsRect, responses, responsesRect = refreshQuestion(numberQuestion)
+        question, text, textRect, options, optionsRect, isEnd = refreshQuestion(numQuestion, questions)
         rect.width = screen_width // 2
         rect.height = screen_height // 2
         rect.center = (screen_width // 2, screen_height // 2)
-        return False
-    return True
+        return question, text, textRect, options, optionsRect, isEnd, False
+    return question, text, textRect, options, optionsRect, isEnd, True
 
-
-score = 0
-displayCorrectAnimation = False
-displayIncorrectAnimation = False
-
-isEnd = False
-
-# create green rect for correct answer animation
-correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
-correctRect.center = (screen_width // 2, screen_height // 2)
-
-# create red rect for incorrect answer animation
-incorrectRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
-incorrectRect.center = (screen_width // 2, screen_height // 2)
-
-# Durée du timer (en millisecondes) 
-start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
-timer_duration = 30 * 1000  # 30 secondes en millisecondes
-combo = 0
-
-while running:
-    # fill the screen with a color to wipe away anything from last frame
+# Fonction pour afficher l'écran de jeu
+def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left):
     screen.fill("purple")
-
-    # Calculer le temps écoulé
-    elapsed_time = pygame.time.get_ticks() - start_ticks
-
-    # Calcul du temps restant
-    time_left = max(0, timer_duration - elapsed_time) // 1000  # En secondes
-
-    # poll for events
-    # pygame.QUIT event means the user clicked screen_width to close your window
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if (isEnd):
-                running = False
-            # check if the mouse click was within the bounds of the option
-            if (optionsRect and options):
-              for i in range(len(optionsRect)):
-                  if optionsRect[i].collidepoint(event.pos):
-                      numberQuestion += 1
-                      # check if the option clicked is the correct answer
-                      if question["options"][i] == question["reponse"]:
-                          print(question["options"][i], question["reponse"])
-                          print("Correct!")
-                          temp_score = 10
-                          if (time_left > 28 ) : 
-                              temp_score *= 2
-                          temp_score += time_left
-                          temp_score += combo * 2
-                          score += temp_score
-
-                          displayCorrectAnimation = True
-                          combo+=1
-                          start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
-
-                      else:
-                          print("Incorrect!")
-                          combo=0
-                          displayIncorrectAnimation = True
-                          start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
-
-                      # display the correct answer
-                      #for j in range(len(responses)):
-                      #    screen.blit(responses[j], responsesRect[j])
-
-
-    # Afficher le timer restant
+    # Afficher le score et le temps restant
+    Score_text = font.render(f"Score : {score}", True, BLACK)
     timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
-    screen.blit(timer_text, (screen_width/50,screen_height/50))
-
-    # Si le temps est écoulé
-    if time_left <= 0:
-        combo=0
-        displayIncorrectAnimation = True
-        numberQuestion+=1
-        start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
-
-
-    #ajout du text score total  
-    Score_text = font.render(f"Score : {score}",True,BLACK)
-    screen.blit(Score_text, (screen_width/1.2,screen_height/50))
-
- 
-    # copying the text surface object
-    # to the display question
-    if (textRect and text):
+    screen.blit(Score_text, (screen_width/1.2, screen_height/50))
+    screen.blit(timer_text, (screen_width/50, screen_height/50))
+    # Afficher la question et les options
+    if textRect and text:
         screen.blit(text, textRect)
+    if optionsRect and options:
+        for i in range(len(options)):
+            pygame.draw.rect(screen, green, optionsRect[i])
+            screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2,
+                                     optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
 
-   # RENDER YOUR GAME HERE
-    if (displayCorrectAnimation):
-        displayCorrectAnimation = displayRect(correctRect, green)
-    elif (displayIncorrectAnimation):
-        displayIncorrectAnimation = displayRect(incorrectRect, red)
-    else:
-        # copying the text surface object
-        # to the display question
-        if (textRect and text):
-            screen.blit(text, textRect)
+# Fonction pour afficher l'écran de fin
+def displayEndScreen(screen, score):
+    screen.fill(BLACK)
+    end_text = font.render(f"Partie finie! Score: {score}.", True, white)
+    screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
+                           screen_height // 2 - end_text.get_rect().height // 2))
+# Boucle principale
+def main():
+    pygame.init()
+    clock = pygame.time.Clock()
 
-        # copying the text surface object
-        # to the display options
-        if (optionsRect and options):
-            for i in range(len(options)):
-                # add text to the screen and rect distinctly
-                # display rect for each option
-                pygame.draw.rect(screen, green, optionsRect[i])
-                # draw text
-                screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2, optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
-        # RENDER YOUR GAME HERE
+    # Variables globales
+    running = True
+    numberQuestion = 0
+    score = 0
+    isEnd = False
+    questions = randomQuestion()
 
-    if (isEnd):
-        screen.fill(BLACK)
-        end_text = font.render(f"Partie fini !!! Score: {score}. ", True, white)
-        screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2, screen_height // 2 - end_text.get_rect().height // 2))
+    # Timer
+    start_ticks = pygame.time.get_ticks()
+    timer_duration = 30 * 1000  # 30 secondes
+    combo = 0
 
-    # flip() the display to put your work on screen
-    pygame.display.flip()
+    # create green rect for correct answer animation
+    correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
+    correctRect.center = (screen_width // 2, screen_height // 2)
 
-    clock.tick(60)  # limits FPS to 60
+    # create red rect for incorrect answer animation
+    incorrectRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
+    incorrectRect.center = (screen_width // 2, screen_height // 2)
 
-pygame.quit()
+    # Durée du timer (en millisecondes)
+    start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
+    timer_duration = 30 * 1000  # 30 secondes en millisecondes
+    combo = 0
+
+    displayCorrectAnimation = False
+    displayIncorrectAnimation = False
+
+    # Charger la première question
+    question, text, textRect, options, optionsRect, isEnd = refreshQuestion(numberQuestion, questions)
+
+    while running:
+        elapsed_time = pygame.time.get_ticks() - start_ticks
+        time_left = max(0, timer_duration - elapsed_time) // 1000
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if (isEnd):
+                    running = False
+                # check if the mouse click was within the bounds of the option
+                if (optionsRect and options):
+                    for i in range(len(optionsRect)):
+                        if optionsRect[i].collidepoint(event.pos):
+                            numberQuestion += 1
+                            # check if the option clicked is the correct answer
+                            if question["options"][i] == question["reponse"]:
+                                print(question["options"][i], question["reponse"])
+                                print("Correct!")
+                                temp_score = 10
+                                if (time_left > 28 ) :
+                                    temp_score *= 2
+                                temp_score += time_left
+                                temp_score += combo * 2
+                                score += temp_score
+
+                                displayCorrectAnimation = True
+                                combo+=1
+                                start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+
+                            else:
+                                print("Incorrect!")
+                                combo=0
+                                displayIncorrectAnimation = True
+                                start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+
+        # Affichage en fonction de l'état du jeu
+        if isEnd:
+            displayEndScreen(screen, score)
+        else:
+            displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left)
+
+        if (displayCorrectAnimation):
+            question, text, textRect, options, optionsRect, isEnd, displayCorrectAnimation = displayRect(correctRect, green, question, text, textRect, options, optionsRect, numberQuestion, isEnd)
+        elif (displayIncorrectAnimation):
+            question, text, textRect, options, optionsRect, isEnd, displayIncorrectAnimation = displayRect(incorrectRect, red, question, text, textRect, options, optionsRect, numberQuestion, isEnd)
+
+        # Flip l'affichage pour rafraîchir l'écran
+        pygame.display.flip()
+        clock.tick(60)  # Limiter à 60 FPS
+
+    pygame.quit()
+
+# Exécution du jeu
+if __name__ == "__main__":
+    main()
