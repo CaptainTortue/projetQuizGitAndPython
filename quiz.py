@@ -7,7 +7,7 @@ import random
 with open('quizz_questions.json', encoding='utf-8') as questions_file:
     listQuestions = json.load(questions_file)
 
-def randomQuestion():
+def randomQuestion(niveau):
     # Sélectionne tous les catégories
     categories = []
     for category in range(0, len(listQuestions) - 1 ):
@@ -22,9 +22,19 @@ def randomQuestion():
     # lister un questionnaire avec 1 catégorie de chaque aléatoirement
     questionnaire = []
 
-    # Initialisation de la première question dans le questionnaire
-    idFirstQuestion = random.randint(0, len(listQuestions) - 1)
-    questionnaire.append(listQuestions[idFirstQuestion])
+    # Initialisation de la première question par rapport au niveau dans le questionnaire
+    if niveau == 1:
+        idFirstQuestion = random.randint(0, 10)
+        questionnaire.append(listQuestions[idFirstQuestion])
+    elif niveau == 2:
+        idFirstQuestion = random.randint(10, 20)
+        questionnaire.append(listQuestions[idFirstQuestion])
+    elif niveau == 3:
+        idFirstQuestion = random.randint(20, 30)
+        questionnaire.append(listQuestions[idFirstQuestion])
+    elif niveau == 4:
+        idFirstQuestion = random.randint(30, 40)
+        questionnaire.append(listQuestions[idFirstQuestion])
 
     trueFalse = False
 
@@ -33,10 +43,15 @@ def randomQuestion():
         idQuestion = random.randint(0, len(listQuestions) - 1)
         for question in questionnaire:
             # Vérification de l'existance d'une catégorie et id dans le questionnaire
+            # Vérification que le niveau de la question correspond au niveau choisi
             # si True alors la question peut-être ajoutée sinon False
             if listQuestions[idQuestion]["categorie"] != question["categorie"]:
                 if listQuestions[idQuestion]["id"] != question["id"]:
-                    trueFalse = True
+                    if listQuestions[idQuestion]["level"] == niveau:
+                        trueFalse = True
+                    else :
+                        trueFalse = False
+                        break
                 else :
                     trueFalse = False
                     break
@@ -86,10 +101,7 @@ pygame.display.set_caption('Show Text')
 font = pygame.font.Font('freesansbold.ttf', 32)
 miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
-questions = randomQuestion()
-
-for i in range(len(questions) - 1):
-    print(questions[i]['id'], " ", questions[i]['categorie'] )
+questions = randomQuestion(1) # Le 1 doit être changé par une variable qui tourne entre 1 à 4
 
 numberQuestion = 0
 
