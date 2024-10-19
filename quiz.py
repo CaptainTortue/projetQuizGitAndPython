@@ -92,7 +92,7 @@ screen_height = 720
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 # set the pygame window name
-pygame.display.set_caption('Show Text')
+pygame.display.set_caption('Quiz Incroyable')
 
 # create a font object.
 # 1st parameter is the font file
@@ -164,10 +164,111 @@ def displayEndScreen(screen, score):
     end_text = font.render(f"Partie finie! Score: {score}.", True, white)
     screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
                            screen_height // 2 - end_text.get_rect().height // 2))
+    
+# Fonction pour afficher le menu d'accueil
+def displayMenu(screen, pseudo_input, selected_category, start_button, category_button):
+    screen.fill("lightblue")
+
+    # Affichage du titre
+    title_font = pygame.font.Font(None, 64)
+    title_text = title_font.render("Bienvenue dans le Quiz", True, (0, 0, 0))
+    screen.blit(title_text, (screen_width // 2 - title_text.get_rect().width // 2, screen_height // 6))
+
+    # Affichage de la zone de texte pour le pseudo
+    input_font = pygame.font.Font(None, 32)
+    input_rect = pygame.Rect(screen_width // 4, screen_height // 3, screen_width // 2, 50)
+    pygame.draw.rect(screen, (255, 255, 255), input_rect)
+
+    # Limiter la longueur du texte à 20 caractères
+    if len(pseudo_input) > 20:
+        pseudo_input = pseudo_input[:20]
+
+    # Calculer la position centrée du texte dans la zone de saisie
+    pseudo_text = input_font.render(pseudo_input, True, (0, 0, 0))
+    pseudo_text_rect = pseudo_text.get_rect(center=input_rect.center)
+    screen.blit(pseudo_text, pseudo_text_rect)
+
+    # Affichage du bouton Start
+    button_font = pygame.font.Font(None, 48)
+    pygame.draw.rect(screen, (0, 255, 0), start_button)
+    start_text = button_font.render("Start", True, (0, 0, 0))
+    screen.blit(start_text, (start_button.x + (start_button.width - start_text.get_rect().width) // 2, start_button.y + 10))
+
+    # Affichage du bouton Catégorie
+    pygame.draw.rect(screen, (255, 165, 0), category_button)
+    category_text = button_font.render("Catégorie", True, (0, 0, 0))
+    screen.blit(category_text, (category_button.x + (category_button.width - category_text.get_rect().width) // 2, category_button.y + 10))
+
+    # Afficher la catégorie sélectionnée
+    input_font = pygame.font.Font(None, 32)
+    selected_cat_text = input_font.render(f"Catégorie: {selected_category}", True, (0, 0, 0))
+    screen.blit(selected_cat_text, (screen_width // 2 - selected_cat_text.get_rect().width // 2, screen_height // 2 + 150))
+
+    pygame.display.flip()
+
+    
+        
+# Boucle principale pour le menu
+def menu():
+    pygame.init()
+    clock = pygame.time.Clock()
+
+    pseudo_input = ""
+    selected_category = "Général"
+    running = True
+    in_menu = True
+
+    # Définir les boutons localement dans le menu
+    start_button = pygame.Rect(screen_width // 3, screen_height // 2, screen_width // 3, 50)
+    category_button = pygame.Rect(screen_width // 3, screen_height // 2 + 80, screen_width // 3, 50)
+
+    while in_menu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                in_menu = False
+                running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    pseudo_input = pseudo_input[:-1]
+                elif len(pseudo_input) < 20:
+                    pseudo_input += event.unicode
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+
+                # Si on clique sur le bouton Start
+                if start_button.collidepoint(mouse_pos):
+                    in_menu = False  # Sortir du menu et lancer le jeu
+
+                # Si on clique sur le bouton Catégorie
+                if category_button.collidepoint(mouse_pos):
+                    # Changer la catégorie (tu peux ajouter plus de catégories ici)
+                    if selected_category == "Général":
+                        selected_category = "Science"
+                    elif selected_category == "Science":
+                        selected_category = "Histoire"
+                    else:
+                        selected_category = "Général"
+
+        # Afficher le menu
+        displayMenu(screen, pseudo_input, selected_category, start_button, category_button)
+
+        clock.tick(60)
+
+    return pseudo_input, selected_category, running
+
 # Boucle principale
 def main():
     pygame.init()
     clock = pygame.time.Clock()
+    
+    # Exécuter le menu
+    pseudo, category, running = menu()
+    
+    if not running:
+        pygame.quit()
+        return
 
     # Variables globales
     running = True
