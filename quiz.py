@@ -251,18 +251,26 @@ def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficul
     pygame.display.flip()
     
 # Fonction pour afficher le leaderboard
-def displayLeaderboard(screen):
-    screen.fill((0, 0, 0))  # Fond noir
+def displayLeaderboard(screen,Jsondonnees):
+    screen.fill((0, 0, 0))
 
-    # Exemple de scores ("Nom",Score)
-    scores = [("Alice", 100), ("Bob", 90), ("Charlie", 85), ("David", 80), ("Eve", 75)]
-
+    scores = []
+    
+    for objet in Jsondonnees:
+        name = objet.get('name', '')        
+        score = int(objet['score'])          
+        timer = float(objet.get('Time', 0))   
+ 
+        scores.append((name, score, timer))
+        
     leaderboard_title = font.render("Leaderboard", True, (255, 255, 255))
     screen.blit(leaderboard_title, (screen_width // 2 - leaderboard_title.get_width() // 2, 50))
-
+    
+    scores = sorted(scores, key=lambda x: (-x[1], x[2]))
+    
     # Afficher la liste des scores
-    for i, (name, score) in enumerate(scores):
-        score_text = font.render(f"{i + 1}. {name}: {score}", True, (255, 255, 255))
+    for i, (name, score, timer) in enumerate(scores):
+        score_text = font.render(f"{i + 1}. {name}: {score} en {timer} sec", True, (255, 255, 255))
         screen.blit(score_text, (screen_width // 3, 150 + i * 50))
 
     # Afficher un bouton pour revenir au menu
@@ -285,16 +293,16 @@ def displayLeaderboard(screen):
                 mouse_pos = pygame.mouse.get_pos()
                 if return_button.collidepoint(mouse_pos):
                     waiting = False  # Revenir au menu
-    
-
-
-    
         
 # Boucle principale pour le menu
 def menu():
     pygame.init()
     clock = pygame.time.Clock()
 
+    # Ouvrir et lire le fichier JSON
+    with open('finalscore_data.json', 'r') as fichier:
+        Jsondonnees = json.load(fichier)
+    
     pseudo_input = ""
     selected_dificulty = "Facile"
     selected_dificulty_number = 1
@@ -344,7 +352,7 @@ def menu():
                         
                 # Si on clique sur le bouton Leaderboard
                 if leaderboard_button.collidepoint(mouse_pos):
-                    displayLeaderboard(screen)  # Afficher le leaderboard
+                    displayLeaderboard(screen,Jsondonnees)  # Afficher le leaderboard
 
                 
                 
@@ -356,13 +364,11 @@ def menu():
 
     return pseudo_input, selected_dificulty_number, running
 
-    one_execution = 0
-
 # Boucle principale
 def main():
     pygame.init()
     clock = pygame.time.Clock()
-    
+        
     # Exécuter le menu
     pseudo, difficulty, running = menu()
     
@@ -377,10 +383,12 @@ def main():
     score = 0
     isEnd = False
     questions = randomQuestion(difficulty)
+    
     # Timer
     start_ticks = pygame.time.get_ticks()
     timer_duration = 30 * 1000  # 30 secondes
     combo = 0
+    
 
     # create green rect for correct answer animation
     correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
