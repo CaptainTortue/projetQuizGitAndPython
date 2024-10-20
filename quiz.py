@@ -1,6 +1,5 @@
 # Example file showing a basic pygame "game loop"
 import pygame
-
 import json
 import random
 
@@ -201,7 +200,7 @@ def handleEvents(running, isEnd, optionsRect, options, question, score, combo, n
     return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks
     
 # Fonction pour afficher le menu d'accueil
-def displayMenu(screen, pseudo_input, selected_category, start_button, category_button):
+def displayMenu(screen, pseudo_input, selected_category, start_button, category_button , leaderboard_button):
     screen.fill("lightblue")
 
     # Affichage du titre
@@ -239,7 +238,51 @@ def displayMenu(screen, pseudo_input, selected_category, start_button, category_
     selected_cat_text = input_font.render(f"Catégorie: {selected_category}", True, (0, 0, 0))
     screen.blit(selected_cat_text, (screen_width // 2 - selected_cat_text.get_rect().width // 2, screen_height // 2 + 150))
 
+     # Afficher le bouton Leaderboard
+    pygame.draw.rect(screen, (0, 255, 0), leaderboard_button)
+    leaderboard_text = font.render("Leaderboard", True, (0, 0, 0))
+    screen.blit(leaderboard_text, (leaderboard_button.x + (leaderboard_button.width - leaderboard_text.get_width()) // 2,leaderboard_button.y + (leaderboard_button.height - leaderboard_text.get_height()) // 2))
+
+    
     pygame.display.flip()
+    
+# Fonction pour afficher le leaderboard
+def displayLeaderboard(screen):
+    screen.fill((0, 0, 0))  # Fond noir
+
+    # Exemple de scores ("Nom",Score)
+    scores = [("Alice", 100), ("Bob", 90), ("Charlie", 85), ("David", 80), ("Eve", 75)]
+
+    leaderboard_title = font.render("Leaderboard", True, (255, 255, 255))
+    screen.blit(leaderboard_title, (screen_width // 2 - leaderboard_title.get_width() // 2, 50))
+
+    # Afficher la liste des scores
+    for i, (name, score) in enumerate(scores):
+        score_text = font.render(f"{i + 1}. {name}: {score}", True, (255, 255, 255))
+        screen.blit(score_text, (screen_width // 3, 150 + i * 50))
+
+    # Afficher un bouton pour revenir au menu
+    return_button = pygame.Rect(screen_width // 3, screen_height - 100, screen_width // 3, 50)
+    pygame.draw.rect(screen, (0, 255, 0), return_button)
+    return_text = font.render("Retour", True, (0, 0, 0))
+    screen.blit(return_text, (return_button.x + (return_button.width - return_text.get_width()) // 2,
+                             return_button.y + (return_button.height - return_text.get_height()) // 2))
+
+    pygame.display.update()
+
+    # Attendre que l'utilisateur clique sur "Retour"
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                waiting = False
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if return_button.collidepoint(mouse_pos):
+                    waiting = False  # Revenir au menu
+    
+
 
     
         
@@ -256,6 +299,7 @@ def menu():
     # Définir les boutons localement dans le menu
     start_button = pygame.Rect(screen_width // 3, screen_height // 2, screen_width // 3, 50)
     category_button = pygame.Rect(screen_width // 3, screen_height // 2 + 80, screen_width // 3, 50)
+    leaderboard_button = pygame.Rect(screen_width // 3, screen_height // 2 + 180, screen_width // 3, 50)
 
     while in_menu:
         for event in pygame.event.get():
@@ -285,9 +329,16 @@ def menu():
                         selected_category = "Histoire"
                     else:
                         selected_category = "Général"
+                        
+                # Si on clique sur le bouton Leaderboard
+                if leaderboard_button.collidepoint(mouse_pos):
+                    displayLeaderboard(screen)  # Afficher le leaderboard
+
+                
+                
 
         # Afficher le menu
-        displayMenu(screen, pseudo_input, selected_category, start_button, category_button)
+        displayMenu(screen, pseudo_input, selected_category, start_button, category_button, leaderboard_button)
 
         clock.tick(60)
 
