@@ -2,7 +2,7 @@
 import pygame
 import json
 import random
-
+from ImportDataJSON import importJSON
 with open('quizz_questions.json', encoding='utf-8') as questions_file:
     listQuestions = json.load(questions_file)
 
@@ -158,11 +158,15 @@ def displayGameScreen(screen, question, text, textRect, options, optionsRect, sc
                                      optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
 
 # Fonction pour afficher l'écran de fin
-def displayEndScreen(screen, score):
+def displayEndScreen(screen, score,pseudo,total_time_left,one_execution):
     screen.fill(BLACK)
     end_text = font.render(f"Partie finie! Score: {score}.", True, white)
     screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
                            screen_height // 2 - end_text.get_rect().height // 2))
+    if (one_execution==0) :
+      importJSON(["name","score","Time"],[pseudo,score,total_time_left])
+      one_execution+=1
+      return one_execution
 
 # Gestion des évènements
 def handleEvents(running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty):
@@ -352,6 +356,8 @@ def menu():
 
     return pseudo_input, selected_dificulty_number, running
 
+    one_execution = 0
+
 # Boucle principale
 def main():
     pygame.init()
@@ -365,12 +371,12 @@ def main():
         return
 
     # Variables globales
+    one_execution = 0
     running = True
     numberQuestion = 0
     score = 0
     isEnd = False
     questions = randomQuestion(difficulty)
-
     # Timer
     start_ticks = pygame.time.get_ticks()
     timer_duration = 30 * 1000  # 30 secondes
@@ -388,6 +394,9 @@ def main():
     start_ticks = pygame.time.get_ticks()  # Temps de démarrage du jeu
     timer_duration = 30 * 1000  # 30 secondes en millisecondes
     combo = 0
+    #total time needed calculation
+    total_ticks = pygame.time.get_ticks()
+
 
     displayCorrectAnimation = False
     displayIncorrectAnimation = False
@@ -399,13 +408,18 @@ def main():
         elapsed_time = pygame.time.get_ticks() - start_ticks
         time_left = max(0, timer_duration - elapsed_time) // 1000
 
+        #calcul de total time for score/json
+        elapsed_time_total = pygame.time.get_ticks() - total_ticks
+        total_time_left = float(max(0, elapsed_time_total) / 1000)
+
+
         running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks = handleEvents(
             running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks ,difficulty
         )
 
         # Affichage en fonction de l'état du jeu
         if isEnd:
-            displayEndScreen(screen, score)
+            one_execution=displayEndScreen(screen, score,pseudo,total_time_left,one_execution)
         else:
             displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left)
 
