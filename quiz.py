@@ -164,6 +164,41 @@ def displayEndScreen(screen, score):
     end_text = font.render(f"Partie finie! Score: {score}.", True, white)
     screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
                            screen_height // 2 - end_text.get_rect().height // 2))
+
+# Gestion des évènements
+def handleEvents(running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if (isEnd):
+                running = False
+            # check if the mouse click was within the bounds of the option
+            if (optionsRect and options):
+                for i in range(len(optionsRect)):
+                    if optionsRect[i].collidepoint(event.pos):
+                        numberQuestion += 1
+                        # check if the option clicked is the correct answer
+                        if question["options"][i] == question["reponse"]:
+                            print(question["options"][i], question["reponse"])
+                            print("Correct!")
+                            temp_score = 10
+                            if (time_left > 28 ) :
+                                temp_score *= 2
+                            temp_score += time_left
+                            temp_score += combo * 2
+                            score += temp_score
+
+                            displayCorrectAnimation = True
+                            combo+=1
+                            start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+
+                        else:
+                            print("Incorrect!")
+                            combo=0
+                            displayIncorrectAnimation = True
+                            start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+    return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks
     
 # Fonction pour afficher le menu d'accueil
 def displayMenu(screen, pseudo_input, selected_category, start_button, category_button):
@@ -305,37 +340,9 @@ def main():
         elapsed_time = pygame.time.get_ticks() - start_ticks
         time_left = max(0, timer_duration - elapsed_time) // 1000
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if (isEnd):
-                    running = False
-                # check if the mouse click was within the bounds of the option
-                if (optionsRect and options):
-                    for i in range(len(optionsRect)):
-                        if optionsRect[i].collidepoint(event.pos):
-                            numberQuestion += 1
-                            # check if the option clicked is the correct answer
-                            if question["options"][i] == question["reponse"]:
-                                print(question["options"][i], question["reponse"])
-                                print("Correct!")
-                                temp_score = 10
-                                if (time_left > 28 ) :
-                                    temp_score *= 2
-                                temp_score += time_left
-                                temp_score += combo * 2
-                                score += temp_score
-
-                                displayCorrectAnimation = True
-                                combo+=1
-                                start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
-
-                            else:
-                                print("Incorrect!")
-                                combo=0
-                                displayIncorrectAnimation = True
-                                start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
+        running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks = handleEvents(
+            running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks
+        )
 
         # Affichage en fonction de l'état du jeu
         if isEnd:
