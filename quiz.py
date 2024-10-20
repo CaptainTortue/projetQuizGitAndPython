@@ -165,7 +165,7 @@ def displayEndScreen(screen, score):
                            screen_height // 2 - end_text.get_rect().height // 2))
 
 # Gestion des évènements
-def handleEvents(running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks):
+def handleEvents(running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -186,7 +186,7 @@ def handleEvents(running, isEnd, optionsRect, options, question, score, combo, n
                                 temp_score *= 2
                             temp_score += time_left
                             temp_score += combo * 2
-                            score += temp_score
+                            score += temp_score * difficulty
 
                             displayCorrectAnimation = True
                             combo+=1
@@ -200,7 +200,7 @@ def handleEvents(running, isEnd, optionsRect, options, question, score, combo, n
     return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks
     
 # Fonction pour afficher le menu d'accueil
-def displayMenu(screen, pseudo_input, selected_category, start_button, category_button , leaderboard_button):
+def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficulty_button , leaderboard_button):
     screen.fill("lightblue")
 
     # Affichage du titre
@@ -228,17 +228,17 @@ def displayMenu(screen, pseudo_input, selected_category, start_button, category_
     start_text = button_font.render("Start", True, (0, 0, 0))
     screen.blit(start_text, (start_button.x + (start_button.width - start_text.get_rect().width) // 2, start_button.y + 10))
 
-    # Affichage du bouton Catégorie
-    pygame.draw.rect(screen, (255, 165, 0), category_button)
-    category_text = button_font.render("Catégorie", True, (0, 0, 0))
-    screen.blit(category_text, (category_button.x + (category_button.width - category_text.get_rect().width) // 2, category_button.y + 10))
+    # Affichage du bouton Difficulté
+    pygame.draw.rect(screen, (255, 165, 0), Difficulty_button)
+    Difficulty_text = button_font.render("Difficulté", True, (0, 0, 0))
+    screen.blit(Difficulty_text, (Difficulty_button.x + (Difficulty_button.width - Difficulty_text.get_rect().width) // 2, Difficulty_button.y + 10))
 
-    # Afficher la catégorie sélectionnée
+    # Afficher la difficulté sélectionnée
     input_font = pygame.font.Font(None, 32)
-    selected_cat_text = input_font.render(f"Catégorie: {selected_category}", True, (0, 0, 0))
+    selected_cat_text = input_font.render(f"Difficulté: {selected_dificulty}", True, (0, 0, 0))
     screen.blit(selected_cat_text, (screen_width // 2 - selected_cat_text.get_rect().width // 2, screen_height // 2 + 150))
 
-     # Afficher le bouton Leaderboard
+    # Afficher le bouton Leaderboard
     pygame.draw.rect(screen, (0, 255, 0), leaderboard_button)
     leaderboard_text = font.render("Leaderboard", True, (0, 0, 0))
     screen.blit(leaderboard_text, (leaderboard_button.x + (leaderboard_button.width - leaderboard_text.get_width()) // 2,leaderboard_button.y + (leaderboard_button.height - leaderboard_text.get_height()) // 2))
@@ -292,13 +292,14 @@ def menu():
     clock = pygame.time.Clock()
 
     pseudo_input = ""
-    selected_category = "Général"
+    selected_dificulty = "Facile"
+    selected_dificulty_number = 1
     running = True
     in_menu = True
 
     # Définir les boutons localement dans le menu
     start_button = pygame.Rect(screen_width // 3, screen_height // 2, screen_width // 3, 50)
-    category_button = pygame.Rect(screen_width // 3, screen_height // 2 + 80, screen_width // 3, 50)
+    Difficulty_button = pygame.Rect(screen_width // 3, screen_height // 2 + 80, screen_width // 3, 50)
     leaderboard_button = pygame.Rect(screen_width // 3, screen_height // 2 + 180, screen_width // 3, 50)
 
     while in_menu:
@@ -320,15 +321,22 @@ def menu():
                 if start_button.collidepoint(mouse_pos):
                     in_menu = False  # Sortir du menu et lancer le jeu
 
-                # Si on clique sur le bouton Catégorie
-                if category_button.collidepoint(mouse_pos):
-                    # Changer la catégorie (tu peux ajouter plus de catégories ici)
-                    if selected_category == "Général":
-                        selected_category = "Science"
-                    elif selected_category == "Science":
-                        selected_category = "Histoire"
+                # Si on clique sur le bouton Difficulté
+                if Difficulty_button.collidepoint(mouse_pos):
+                    # Changer la Difficulté
+                    if selected_dificulty == "Facile":
+                        selected_dificulty = "Moyen"
+                        selected_dificulty_number = 2
+                    elif selected_dificulty == "Moyen":
+                        selected_dificulty = "Difficile"
+                        selected_dificulty_number = 3
+                    elif selected_dificulty == "Difficile":
+                        selected_dificulty = "Très difficile"
+                        selected_dificulty_number = 4
                     else:
-                        selected_category = "Général"
+                        selected_dificulty = "Facile"
+                        selected_dificulty_number = 1
+                        
                         
                 # Si on clique sur le bouton Leaderboard
                 if leaderboard_button.collidepoint(mouse_pos):
@@ -338,11 +346,11 @@ def menu():
                 
 
         # Afficher le menu
-        displayMenu(screen, pseudo_input, selected_category, start_button, category_button, leaderboard_button)
+        displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficulty_button, leaderboard_button)
 
         clock.tick(60)
 
-    return pseudo_input, selected_category, running
+    return pseudo_input, selected_dificulty_number, running
 
 # Boucle principale
 def main():
@@ -350,7 +358,7 @@ def main():
     clock = pygame.time.Clock()
     
     # Exécuter le menu
-    pseudo, category, running = menu()
+    pseudo, difficulty, running = menu()
     
     if not running:
         pygame.quit()
@@ -361,7 +369,7 @@ def main():
     numberQuestion = 0
     score = 0
     isEnd = False
-    questions = randomQuestion(1)
+    questions = randomQuestion(difficulty)
 
     # Timer
     start_ticks = pygame.time.get_ticks()
@@ -392,7 +400,7 @@ def main():
         time_left = max(0, timer_duration - elapsed_time) // 1000
 
         running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks = handleEvents(
-            running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks
+            running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks ,difficulty
         )
 
         # Affichage en fonction de l'état du jeu
