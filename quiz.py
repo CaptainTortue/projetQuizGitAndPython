@@ -2,7 +2,10 @@
 import pygame
 import json
 import random
+from pathlib import Path
+
 from ImportDataJSON import importJSON
+
 with open('quizz_questions.json', encoding='utf-8') as questions_file:
     listQuestions = json.load(questions_file)
 
@@ -297,9 +300,12 @@ def menu():
     pygame.init()
     clock = pygame.time.Clock()
 
-    # Ouvrir et lire le fichier JSON
-    with open('finalscore_data.json', 'r') as fichier:
-        Jsondonnees = json.load(fichier)
+    if (Path("finalscore_data.txt").is_file()):
+        # Ouvrir et lire le fichier JSON
+        with open('finalscore_data.json', 'r') as fichier:
+            Jsondonnees = json.load(fichier)
+    else :
+        Jsondonnees = []
     
     pseudo_input = ""
     selected_dificulty = "Facile"
