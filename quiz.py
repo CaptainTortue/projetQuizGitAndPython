@@ -104,7 +104,6 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
 def refreshQuestion(numQuestion, questions):
-    print("refresh question", numQuestion)
     if numQuestion >= len(questions):
         return None, None, None, None, None, True # set isEnd to False
     question = questions[numQuestion]
@@ -185,7 +184,6 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
                         numberQuestion += 1
                         # check if the option clicked is the correct answer
                         if question["options"][i] == question["reponse"]:
-                            print(question["options"][i], question["reponse"])
                             print("Correct!")
                             temp_score = 10
                             if (time_left > 28 ) :
@@ -441,8 +439,6 @@ def main():
         running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question = handleEvents(
             running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks ,difficulty, pseudo, questions, one_execution, textRect, optionsRect, text
         )
-
-        print(text, options)
 
 
         # Affichage en fonction de l'état du jeu
