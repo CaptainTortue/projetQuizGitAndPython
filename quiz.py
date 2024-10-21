@@ -100,8 +100,6 @@ pygame.display.set_caption('Quiz Incroyable')
 font = pygame.font.Font('freesansbold.ttf', 32)
 miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
-questions = randomQuestion(1) # Le 1 doit être changé par une variable qui tourne entre 1 à 4
-
 def refreshQuestion(numQuestion, questions):
     print("refresh question", numQuestion)
     if numQuestion >= len(questions):
@@ -125,7 +123,7 @@ def refreshQuestion(numQuestion, questions):
         optionsRect.append(optionRect)
     return question, text, textRect, options, optionsRect, False
 
-def displayRect(rect, color, question, text, textRect, options, optionsRect, numQuestion, isEnd):
+def displayRect(rect, color, question, text, textRect, options, optionsRect, numQuestion, isEnd, questions):
     pygame.draw.rect(screen, color, rect)
     # set the correctRect bigger
     rect.inflate_ip(40, 40)
@@ -432,9 +430,9 @@ def main():
             displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left)
 
         if (displayCorrectAnimation):
-            question, text, textRect, options, optionsRect, isEnd, displayCorrectAnimation = displayRect(correctRect, green, question, text, textRect, options, optionsRect, numberQuestion, isEnd)
+            question, text, textRect, options, optionsRect, isEnd, displayCorrectAnimation = displayRect(correctRect, green, question, text, textRect, options, optionsRect, numberQuestion, isEnd, questions)
         elif (displayIncorrectAnimation):
-            question, text, textRect, options, optionsRect, isEnd, displayIncorrectAnimation = displayRect(incorrectRect, red, question, text, textRect, options, optionsRect, numberQuestion, isEnd)
+            question, text, textRect, options, optionsRect, isEnd, displayIncorrectAnimation = displayRect(incorrectRect, red, question, text, textRect, options, optionsRect, numberQuestion, isEnd, questions)
 
         # Flip l'affichage pour rafraîchir l'écran
         pygame.display.flip()
