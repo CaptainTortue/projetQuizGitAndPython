@@ -170,15 +170,16 @@ def displayEndScreen(screen, score,pseudo,total_time_left,one_execution):
       return one_execution
 
 # Gestion des évènements
-def handleEvents(running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty):
+def handleEvents(running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty, pseudo, questions, one_execution, textRect, optionsRect, text):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             if (isEnd):
-                running = False
+                pseudo, difficulty, running = menu()
+                numberQuestion, score, isEnd, questions, question, text, textRect, options, optionsRect, one_execution, displayCorrectAnimation, displayIncorrectAnimation = refreshGame(difficulty)
             # check if the mouse click was within the bounds of the option
-            if (optionsRect and options):
+            elif (optionsRect and options):
                 for i in range(len(optionsRect)):
                     if optionsRect[i].collidepoint(event.pos):
                         numberQuestion += 1
@@ -202,7 +203,7 @@ def handleEvents(running, isEnd, optionsRect, options, question, score, combo, n
                             combo=0
                             displayIncorrectAnimation = True
                             start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
-    return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks
+    return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question
     
 # Fonction pour afficher le menu d'accueil
 def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficulty_button , leaderboard_button):
@@ -368,6 +369,18 @@ def menu():
 
     return pseudo_input, selected_dificulty_number, running
 
+# refresh all variables for a new game
+def refreshGame(difficulty):
+    numberQuestion = 0
+    score = 0
+    displayCorrectAnimation = False
+    displayIncorrectAnimation = False
+    one_execution = 0
+    questions = randomQuestion(difficulty)
+    question, text, textRect, options, optionsRect, isEnd = refreshQuestion(numberQuestion, questions)
+    return numberQuestion, score, isEnd, questions, question, text, textRect, options, optionsRect, one_execution, displayCorrectAnimation, displayIncorrectAnimation
+
+
 # Boucle principale
 def main():
     pygame.init()
@@ -425,9 +438,12 @@ def main():
         total_time_left = float(max(0, elapsed_time_total) / 1000)
 
 
-        running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks = handleEvents(
-            running, isEnd, optionsRect, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks ,difficulty
+        running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question = handleEvents(
+            running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks ,difficulty, pseudo, questions, one_execution, textRect, optionsRect, text
         )
+
+        print(text, options)
+
 
         # Affichage en fonction de l'état du jeu
         if isEnd:
