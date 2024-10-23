@@ -9,6 +9,9 @@ from ImportDataJSON import importJSON
 with open('quizz_questions.json', encoding='utf-8') as questions_file:
     listQuestions = json.load(questions_file)
 
+pygame.mixer.init()
+
+
 def randomQuestion(niveau):
     # Selects all categories
     categories = []
@@ -140,7 +143,7 @@ def displayRect(rect, color, question, text, textRect, options, optionsRect, num
 
 # Function to display the game screen
 def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left):
-    screen.fill("purple")
+    screen.fill("purple") 
     # Display score and remaining time
     Score_text = font.render(f"Score : {score}", True, BLACK)
     timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
@@ -162,7 +165,15 @@ def displayEndScreen(screen, score, pseudo, total_time_left, one_execution):
     end_text = font.render(f"Partie finie! Score: {score}.", True, white)
     screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
                            screen_height // 2 - end_text.get_rect().height // 2))
+    
     if one_execution == 0:
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load("ENDINGPRO.mp3")
+        # Définir le volume de la musique (0.0 à 1.0)
+        pygame.mixer.music.set_volume(0.9)
+
+        # Jouer la musique en boucle (-1 signifie répétition infinie)
+        pygame.mixer.music.play(-1)
         importJSON(["name", "score", "Time"], [pseudo, score, total_time_left])
         one_execution += 1
         return one_execution
@@ -309,6 +320,13 @@ def menu():
     pygame.init()
     clock = pygame.time.Clock()
 
+    pygame.mixer.music.load("MusicMenuProfessionel.mp3")
+    # Définir le volume de la musique (0.0 à 1.0)
+    pygame.mixer.music.set_volume(0.5)
+
+    # Jouer la musique en boucle (-1 signifie répétition infinie)
+    pygame.mixer.music.play(-1)
+
     # Check if the score file exists, load JSON data if it does
     if (Path("finalscore_data.json").is_file()):
         # Open and read the JSON file
@@ -351,6 +369,14 @@ def menu():
                 # If "Start" button is clicked
                 if start_button.collidepoint(mouse_pos):
                     in_menu = False  # Exit the menu and start the game
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load("QCMMusicProfessional.mp3")
+                    # Définir le volume de la musique (0.0 à 1.0)
+                    pygame.mixer.music.set_volume(0.5)
+
+                    # Jouer la musique en boucle (-1 signifie répétition infinie)
+                    pygame.mixer.music.play(-1)
+
 
                 # If "Difficulty" button is clicked
                 if Difficulty_button.collidepoint(mouse_pos):
@@ -394,6 +420,9 @@ def main():
 
     # Run the menu
     pseudo, difficulty, running = menu()
+
+
+    
 
     if running:
         one_execution = 0
