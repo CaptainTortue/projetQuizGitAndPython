@@ -169,7 +169,6 @@ def displayEndScreen(screen, score, pseudo, total_time_left, one_execution):
 
 # Event handling
 def handleEvents(running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty, pseudo, questions, one_execution, textRect, optionsRect, text):
-    print("start", difficulty)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -306,7 +305,6 @@ def displayLeaderboard(screen, Jsondonnees):
                 if return_button.collidepoint(mouse_pos):
                     waiting = False  # Return to the menu
                     running = True
-                    print("Return to menu")
     return running
 
 # Main loop for the menu
