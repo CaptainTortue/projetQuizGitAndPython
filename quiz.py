@@ -177,6 +177,7 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
             if (isEnd):
                 pseudo, difficulty, running = menu()
                 numberQuestion, score, isEnd, questions, question, text, textRect, options, optionsRect, one_execution, displayCorrectAnimation, displayIncorrectAnimation = refreshGame(difficulty)
+                start_ticks = pygame.time.get_ticks() + 1000  # Temps de démarrage du jeu
             # check if the mouse click was within the bounds of the option
             elif (optionsRect and options):
                 for i in range(len(optionsRect)):
@@ -396,13 +397,7 @@ def main():
     running = True
     numberQuestion = 0
     score = 0
-    isEnd = False
     questions = randomQuestion(difficulty)
-    
-    # Timer
-    start_ticks = pygame.time.get_ticks()
-    timer_duration = 30 * 1000  # 30 secondes
-    combo = 0
     
 
     # create green rect for correct answer animation
