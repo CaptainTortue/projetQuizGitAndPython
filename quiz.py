@@ -124,7 +124,7 @@ def refreshQuestion(numQuestion, questions):
     return question, text, textRect, options, optionsRect, False
 
 def displayRect(rect, color, question, text, textRect, options, optionsRect, numQuestion, isEnd, questions):
-    pygame.draw.rect(screen, color, rect)
+    pygame.draw.rect(screen, color, rect,border_radius=20)
     # Make the correctRect larger
     rect.inflate_ip(40, 40)
     # Refresh the center of the rect
@@ -151,7 +151,8 @@ def displayGameScreen(screen, question, text, textRect, options, optionsRect, sc
         screen.blit(text, textRect)
     if optionsRect and options:
         for i in range(len(options)):
-            pygame.draw.rect(screen, green, optionsRect[i])
+            pygame.draw.rect(screen, green, optionsRect[i], border_radius=20)
+
             screen.blit(options[i], (optionsRect[i].x + optionsRect[i].w // 2 - options[i].get_rect().w // 2,
                                      optionsRect[i].y + optionsRect[i].h // 2 - options[i].get_rect().h // 2))
 
@@ -215,7 +216,7 @@ def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficul
     # Display the text input field for the pseudo
     input_font = pygame.font.Font(None, 32)
     input_rect = pygame.Rect(screen_width // 4, screen_height // 3, screen_width // 2, 50)
-    pygame.draw.rect(screen, (255, 255, 255), input_rect)
+    pygame.draw.rect(screen,(255, 255, 255), input_rect, border_radius=20)
 
     # Limit text length to 20 characters
     if len(pseudo_input) > 20:
@@ -228,12 +229,13 @@ def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficul
 
     # Display the Start button
     button_font = pygame.font.Font(None, 48)
-    pygame.draw.rect(screen, (0, 255, 0), start_button)
+    pygame.draw.rect(screen, (0, 255, 0), start_button ,border_radius=20)
+
     start_text = button_font.render("Start", True, (0, 0, 0))
     screen.blit(start_text, (start_button.x + (start_button.width - start_text.get_rect().width) // 2, start_button.y + 10))
 
     # Display the Difficulty button
-    pygame.draw.rect(screen, (255, 165, 0), Difficulty_button)
+    pygame.draw.rect(screen, (255, 165, 0), Difficulty_button ,border_radius=20)
     Difficulty_text = button_font.render("Difficulty", True, (0, 0, 0))
     screen.blit(Difficulty_text, (Difficulty_button.x + (Difficulty_button.width - Difficulty_text.get_rect().width) // 2, Difficulty_button.y + 10))
 
@@ -243,7 +245,7 @@ def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficul
     screen.blit(selected_cat_text, (screen_width // 2 - selected_cat_text.get_rect().width // 2, screen_height // 2 + 150))
 
     # Display the Leaderboard button
-    pygame.draw.rect(screen, (0, 255, 0), leaderboard_button)
+    pygame.draw.rect(screen, (0, 255, 0), leaderboard_button,border_radius=20)
     leaderboard_text = font.render("Leaderboard", True, (0, 0, 0))
     screen.blit(leaderboard_text, (leaderboard_button.x + (leaderboard_button.width - leaderboard_text.get_width()) // 2,
                                    leaderboard_button.y + (leaderboard_button.height - leaderboard_text.get_height()) // 2))
@@ -280,7 +282,7 @@ def displayLeaderboard(screen, Jsondonnees):
 
     # Display a button to return to the menu
     return_button = pygame.Rect(screen_width // 3, screen_height - 100, screen_width // 3, 50)
-    pygame.draw.rect(screen, (0, 255, 0), return_button)
+    pygame.draw.rect(screen, (0, 255, 0), return_button,border_radius=20)
     return_text = font.render("Return", True, (0, 0, 0))
     screen.blit(return_text, (return_button.x + (return_button.width - return_text.get_width()) // 2,
                               return_button.y + (return_button.height - return_text.get_height()) // 2))
