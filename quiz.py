@@ -102,7 +102,7 @@ def refreshQuestion(numQuestion, questions):
     if numQuestion >= len(questions):
         return None, None, None, None, None, True  # set isEnd to True
     question = questions[numQuestion]
-    text = font.render(question["question"], True, green, blue)
+    text = font.render(question["question"], True, BLACK)
     textRect = text.get_rect()
     if textRect.width > screen_width:
         text = miniFont.render(question["question"], True, green, blue)
@@ -140,7 +140,7 @@ def displayRect(rect, color, question, text, textRect, options, optionsRect, num
 
 # Function to display the game screen
 def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left):
-    screen.fill("purple")
+    screen.fill("lightblue")
     # Display score and remaining time
     Score_text = font.render(f"Score : {score}", True, BLACK)
     timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
@@ -265,9 +265,12 @@ def displayLeaderboard(screen, Jsondonnees):
         timer = float(objet.get('Time', 0))
 
         scores.append((name, score, timer))
-
+        # Draw a rectangle as a background for the leaderboard
+        leaderboard_bg_rect = pygame.Rect(screen_width // 4, 100, screen_width // 2, screen_height - 220)
+        pygame.draw.rect(screen, (255, 255, 255), leaderboard_bg_rect,
+                         border_radius=20)  # Dark gray background with rounded corners
     # Display the leaderboard title
-    leaderboard_title = font.render("Leaderboard", True, (255, 255, 255))
+    leaderboard_title = font.render("Leaderboard", True, (0, 0, 0))
     screen.blit(leaderboard_title, (screen_width // 2 - leaderboard_title.get_width() // 2, 50))
 
     # Sort the scores first by highest score and then by lowest time
@@ -277,7 +280,7 @@ def displayLeaderboard(screen, Jsondonnees):
     for i, (name, score, timer) in enumerate(scores):
         if i >= 8: # Display only the top 8 scores
             break
-        score_text = font.render(f"{i + 1}. {name}: {score} in {timer} sec", True, (255, 255, 255))
+        score_text = font.render(f"{i + 1}. {name}: {score} in {timer} sec", True, (0, 0, 0))
         screen.blit(score_text, (screen_width // 3, 150 + i * 50))
 
     # Display a button to return to the menu
