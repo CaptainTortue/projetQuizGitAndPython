@@ -387,14 +387,8 @@ def main():
         
     # Exécuter le menu
     pseudo, difficulty, running = menu()
-    
-    if not running:
-        pygame.quit()
-        return
 
-    # Variables globales
     one_execution = 0
-    running = True
     numberQuestion = 0
     score = 0
     questions = randomQuestion(difficulty)
