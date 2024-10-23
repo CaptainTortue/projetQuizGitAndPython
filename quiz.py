@@ -168,6 +168,7 @@ def displayEndScreen(screen, score, pseudo, total_time_left, one_execution):
 
 # Event handling
 def handleEvents(running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty, pseudo, questions, one_execution, textRect, optionsRect, text):
+    print("start", difficulty)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -200,7 +201,7 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
                             combo = 0
                             displayIncorrectAnimation = True
                             start_ticks = pygame.time.get_ticks() + 1000  # Game start time
-    return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question
+    return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question, difficulty
 
 # Function to display the main menu
 def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficulty_button, leaderboard_button):
@@ -251,7 +252,7 @@ def displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficul
 
 # Function to display the leaderboard
 def displayLeaderboard(screen, Jsondonnees):
-    screen.fill((0, 0, 0))
+    screen.fill("lightblue")
 
     scores = []
 
@@ -272,6 +273,8 @@ def displayLeaderboard(screen, Jsondonnees):
 
     # Display the list of scores
     for i, (name, score, timer) in enumerate(scores):
+        if i >= 8: # Display only the top 8 scores
+            break
         score_text = font.render(f"{i + 1}. {name}: {score} in {timer} sec", True, (255, 255, 255))
         screen.blit(score_text, (screen_width // 3, 150 + i * 50))
 
@@ -286,15 +289,20 @@ def displayLeaderboard(screen, Jsondonnees):
 
     # Wait for the user to click on "Return"
     waiting = True
+    running = True
     while waiting:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 waiting = False
                 pygame.quit()
+                running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if return_button.collidepoint(mouse_pos):
                     waiting = False  # Return to the menu
+                    running = True
+                    print("Return to menu")
+    return running
 
 # Main loop for the menu
 def menu():
@@ -302,7 +310,7 @@ def menu():
     clock = pygame.time.Clock()
 
     # Check if the score file exists, load JSON data if it does
-    if (Path("finalscore_data.txt").is_file()):
+    if (Path("finalscore_data.json").is_file()):
         # Open and read the JSON file
         with open('finalscore_data.json', 'r') as fichier:
             Jsondonnees = json.load(fichier)
@@ -320,20 +328,24 @@ def menu():
     Difficulty_button = pygame.Rect(screen_width // 3, screen_height // 2 + 80, screen_width // 3, 50)
     leaderboard_button = pygame.Rect(screen_width // 3, screen_height // 2 + 180, screen_width // 3, 50)
 
-    while in_menu:
+    while in_menu and running:
+
+        # Display the menu
+        displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficulty_button, leaderboard_button)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 in_menu = False
                 running = False
 
             # Handle text input for the pseudo field
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     pseudo_input = pseudo_input[:-1]
                 elif len(pseudo_input) < 20:
                     pseudo_input += event.unicode
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
 
                 # If "Start" button is clicked
@@ -358,10 +370,7 @@ def menu():
 
                 # If "Leaderboard" button is clicked
                 if leaderboard_button.collidepoint(mouse_pos):
-                    displayLeaderboard(screen, Jsondonnees)  # Display the leaderboard
-
-        # Display the menu
-        displayMenu(screen, pseudo_input, selected_dificulty, start_button, Difficulty_button, leaderboard_button)
+                    running = displayLeaderboard(screen, Jsondonnees)  # Display the leaderboard
 
         clock.tick(60)
 
@@ -386,32 +395,33 @@ def main():
     # Run the menu
     pseudo, difficulty, running = menu()
 
-    one_execution = 0
-    numberQuestion = 0
-    score = 0
-    questions = randomQuestion(difficulty)
+    if running:
+        one_execution = 0
+        numberQuestion = 0
+        score = 0
+        questions = randomQuestion(difficulty)
 
-    # Create a green rectangle for correct answer animation
-    correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
-    correctRect.center = (screen_width // 2, screen_height // 2)
+        # Create a green rectangle for correct answer animation
+        correctRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
+        correctRect.center = (screen_width // 2, screen_height // 2)
 
-    # Create a red rectangle for incorrect answer animation
-    incorrectRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
-    incorrectRect.center = (screen_width // 2, screen_height // 2)
+        # Create a red rectangle for incorrect answer animation
+        incorrectRect = pygame.Rect(screen_width // 2, screen_height // 2, screen_width // 2, screen_height // 6)
+        incorrectRect.center = (screen_width // 2, screen_height // 2)
 
-    # Timer duration (in milliseconds)
-    start_ticks = pygame.time.get_ticks()  # Record the start time of the game
-    timer_duration = 30 * 1000  # 30-second timer in milliseconds
-    combo = 0
+        # Timer duration (in milliseconds)
+        start_ticks = pygame.time.get_ticks()  # Record the start time of the game
+        timer_duration = 30 * 1000  # 30-second timer in milliseconds
+        combo = 0
 
-    # Calculate total time needed
-    total_ticks = pygame.time.get_ticks()
+        # Calculate total time needed
+        total_ticks = pygame.time.get_ticks()
 
-    displayCorrectAnimation = False
-    displayIncorrectAnimation = False
+        displayCorrectAnimation = False
+        displayIncorrectAnimation = False
 
-    # Load the first question
-    question, text, textRect, options, optionsRect, isEnd = refreshQuestion(numberQuestion, questions)
+        # Load the first question
+        question, text, textRect, options, optionsRect, isEnd = refreshQuestion(numberQuestion, questions)
 
     while running:
         elapsed_time = pygame.time.get_ticks() - start_ticks  # Time elapsed since the start of the question
@@ -422,7 +432,7 @@ def main():
         total_time_left = float(max(0, elapsed_time_total) / 1000)
 
         # Handle game events (responses, transitions, etc.)
-        running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question = handleEvents(
+        running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question, difficulty = handleEvents(
             running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty, pseudo, questions, one_execution, textRect, optionsRect, text
         )
 
