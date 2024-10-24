@@ -146,7 +146,7 @@ def displayRect(rect, color, question, text, textRect, options, optionsRect, num
     return question, text, textRect, options, optionsRect, isEnd, True
 
 # Function to display the game screen
-def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left):
+def displayGameScreen(screen, text, textRect, options, optionsRect, score, time_left):
     screen.fill("lightblue")
 
     # Display score and remaining time
@@ -484,7 +484,7 @@ def main():
         if isEnd:
             one_execution = displayEndScreen(screen, score, pseudo, total_time_left, one_execution)
         else:
-            displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left)
+            displayGameScreen(screen, text, textRect, options, optionsRect, score, time_left)
 
         # Show correct or incorrect answer animation
         if displayCorrectAnimation:
