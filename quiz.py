@@ -89,16 +89,16 @@ def randomQuestion(niveau):
 
     # Initialize the first question according to the level in the quiz
     if niveau == 1:
-        idFirstQuestion = random.randint(0, 10)
+        idFirstQuestion = random.randint(0, 9)
         questionnaire.append(listQuestions[idFirstQuestion])
     elif niveau == 2:
-        idFirstQuestion = random.randint(10, 20)
+        idFirstQuestion = random.randint(10, 19)
         questionnaire.append(listQuestions[idFirstQuestion])
     elif niveau == 3:
-        idFirstQuestion = random.randint(20, 30)
+        idFirstQuestion = random.randint(20, 29)
         questionnaire.append(listQuestions[idFirstQuestion])
     elif niveau == 4:
-        idFirstQuestion = random.randint(30, 40)
+        idFirstQuestion = random.randint(30, 39)
         questionnaire.append(listQuestions[idFirstQuestion])
 
     trueFalse = False
@@ -457,9 +457,6 @@ def main():
 
     # Run the menu
     pseudo, difficulty, running = menu()
-
-
-
 
     if running:
         one_execution = 0
