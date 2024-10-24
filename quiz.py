@@ -130,7 +130,6 @@ def randomQuestion(niveau):
 
 print("Bienvenue dans le jeu de quiz!")
 
-
 def refreshQuestion(numQuestion, questions):
     if numQuestion >= len(questions):
         return None, None, None, None, None, True  # set isEnd to True
@@ -138,7 +137,7 @@ def refreshQuestion(numQuestion, questions):
     text = font.render(question["question"], True, BLACK)
     textRect = text.get_rect()
     if textRect.width > screen_width:
-        text = miniFont.render(question["question"], True, green, blue)
+        text = miniFont.render(question["question"], True, BLACK)
         textRect = text.get_rect()
     textRect.center = (screen_width // 2, screen_height // 6)
     options = []
@@ -173,6 +172,7 @@ def displayRect(rect, color, question, text, textRect, options, optionsRect, num
 
 # Function to display the game screen
 def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left,start_ticks,timer_duration):
+
     screen.fill("lightblue")
 
     # Display score and remaining time
@@ -197,7 +197,7 @@ def displayEndScreen(screen, score, pseudo, total_time_left, one_execution):
     end_text = font.render(f"Partie finie! Score: {score}.", True, white)
     screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
                            screen_height // 2 - end_text.get_rect().height // 2))
-    
+
     if one_execution == 0:
         pygame.mixer.music.stop()
         pygame.mixer.music.load("ENDINGPRO.mp3")
@@ -215,6 +215,12 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if time_left <= 0 :
+            numberQuestion += 1
+            displayIncorrectAnimation = True
+            combo = 0
+            start_ticks = pygame.time.get_ticks() + 1000  # Game start time
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if isEnd:
                 pseudo, difficulty, running = menu()
@@ -244,6 +250,7 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
                             combo = 0
                             displayIncorrectAnimation = True
                             start_ticks = pygame.time.get_ticks() + 1000  # Game start time
+
     return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question, difficulty
 
 # Function to display the main menu
@@ -457,7 +464,7 @@ def main():
     pseudo, difficulty, running = menu()
 
 
-    
+
 
     if running:
         one_execution = 0
@@ -505,6 +512,7 @@ def main():
             one_execution = displayEndScreen(screen, score, pseudo, total_time_left, one_execution)
         else:
             displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left,start_ticks,timer_duration)
+
 
         # Show correct or incorrect answer animation
         if displayCorrectAnimation:

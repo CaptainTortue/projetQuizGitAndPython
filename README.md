@@ -48,10 +48,10 @@ Bienvenue dans notre projet de **Quiz collaboratif** développé sous **Python**
 
 Voici la répartition des tâches au sein de l'équipe :
 
-- **Tony Dary** : Gestionnaire de questions (gestion de la récupération des questions et gestion du fichier des questions JSON).
-- **Tristan Martinez** : Interface utilisateur (design et interaction utilisateur avec Pygame, affichage du score).
-- **Aymane Merbouh** : Système de scoring (calcul du score en fonction du temps et des réponses).
-- **Nicolas Delevingne** : Fonctionnalités avancées (gestion du chronomètre, création de système de difficulté).
+- **Tony Dary** : Gestionnaire de questions, gestion de la récupération des questions et gestion du fichier des questions JSON, redaction du ReadMe, aide au système de difficulter.
+- **Tristan Martinez** : Interface utilisateur, design et interaction utilisateur avec Pygame (sauf le menu), aide affichage du score.
+- **Aymane Merbouh** : Système de scoring, sauvegarde des fin de parties, calcul du score en fonction du temps et des réponses, aide pour l'interface et le menu.
+- **Nicolas Delevingne** : Fonctionnalités avancées, gestion du chronomètre, création de système de difficulté et du menu, aide au système de score.
 
 ## Licence
 
