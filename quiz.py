@@ -11,6 +11,66 @@ with open('quizz_questions.json', encoding='utf-8') as questions_file:
 
 pygame.mixer.init()
 
+# pygame setup
+pygame.init()
+clock = pygame.time.Clock()
+running = True
+
+
+# Define the RGB value for white, green, blue, and red
+white = (255, 255, 255)
+green = (0, 255, 0)
+blue = (0, 0, 128)
+red = (255, 0, 0)
+gold = (255, 215, 0)
+greendarker = (58,178,26)
+
+# Create the display surface object of specific dimension (screen_width, screen_height)
+BLACK = (0, 0, 0)
+
+# Assign values to screen width and height variables
+screen_width = 1280
+screen_height = 720
+
+# Create the display surface object of specific dimensions
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Set the pygame window name
+pygame.display.set_caption('Incredible Quiz')
+
+# Create a font object
+# 1st parameter is the font file present in pygame
+# 2nd parameter is the font size
+font = pygame.font.Font('freesansbold.ttf', 32)
+miniFont = pygame.font.Font('freesansbold.ttf', 16)
+
+
+# Fonction to show the timer bar and the timer
+def show_timer(screen, font, start_ticks, timer_duration, screen_width, screen_height):
+    elapsed_time = pygame.time.get_ticks() - start_ticks
+
+    # Calcul of the time left
+    time_left = max(0, timer_duration - elapsed_time) // 1000  # En secondes
+
+    #show the time text
+    timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
+    screen.blit(timer_text, (screen_width // 50, screen_height // 50))  # Position (x, y)
+
+    # size and position of the bar
+    bar_width = screen_width 
+    bar_height = screen_height *5/100
+    bar_x = screen_width - screen_width
+    bar_y = screen_height - screen_height *5/100
+
+    proportion_time_left = (timer_duration - elapsed_time) / timer_duration
+
+    current_bar_width = max(0, proportion_time_left * bar_width)
+
+    pygame.draw.rect(screen, "lightblue" , (bar_x, bar_y, bar_width, bar_height))
+
+    pygame.draw.rect(screen, greendarker, (bar_x, bar_y, current_bar_width, bar_height))
+
+    return time_left
 
 def randomQuestion(niveau):
     # Selects all categories
@@ -70,36 +130,6 @@ def randomQuestion(niveau):
 
 print("Bienvenue dans le jeu de quiz!")
 
-# pygame setup
-pygame.init()
-clock = pygame.time.Clock()
-running = True
-
-
-# Define the RGB value for white, green, blue, and red
-white = (255, 255, 255)
-green = (0, 255, 0)
-blue = (0, 0, 128)
-red = (255, 0, 0)
-
-# Create the display surface object of specific dimension (screen_width, screen_height)
-BLACK = (0, 0, 0)
-
-# Assign values to screen width and height variables
-screen_width = 1280
-screen_height = 720
-
-# Create the display surface object of specific dimensions
-screen = pygame.display.set_mode((screen_width, screen_height))
-
-# Set the pygame window name
-pygame.display.set_caption('Incredible Quiz')
-
-# Create a font object
-# 1st parameter is the font file present in pygame
-# 2nd parameter is the font size
-font = pygame.font.Font('freesansbold.ttf', 32)
-miniFont = pygame.font.Font('freesansbold.ttf', 16)
 
 def refreshQuestion(numQuestion, questions):
     if numQuestion >= len(questions):
@@ -142,11 +172,12 @@ def displayRect(rect, color, question, text, textRect, options, optionsRect, num
     return question, text, textRect, options, optionsRect, isEnd, True
 
 # Function to display the game screen
-def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left):
+def displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left,start_ticks,timer_duration):
     screen.fill("lightblue")
 
     # Display score and remaining time
     Score_text = font.render(f"Score : {score}", True, BLACK)
+    show_timer(screen, font, start_ticks, timer_duration, screen_width, screen_height)
     timer_text = font.render(f"Temps restant: {time_left}", True, BLACK)
     screen.blit(Score_text, (screen_width / 1.2, screen_height / 50))
     screen.blit(timer_text, (screen_width / 50, screen_height / 50))
@@ -473,7 +504,7 @@ def main():
         if isEnd:
             one_execution = displayEndScreen(screen, score, pseudo, total_time_left, one_execution)
         else:
-            displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left)
+            displayGameScreen(screen, question, text, textRect, options, optionsRect, score, time_left,start_ticks,timer_duration)
 
         # Show correct or incorrect answer animation
         if displayCorrectAnimation:
