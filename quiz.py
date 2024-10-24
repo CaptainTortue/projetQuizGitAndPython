@@ -432,9 +432,6 @@ def main():
     # Run the menu
     pseudo, difficulty, running = menu()
 
-
-    
-
     if running:
         one_execution = 0
         numberQuestion = 0
