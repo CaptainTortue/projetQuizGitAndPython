@@ -1,6 +1,6 @@
-# Quiz Collaboratif
+# Incredible Quiz
 
-Bienvenue dans notre projet de **Quiz collaboratif** développé sous **Python** avec la bibliothèque **Pygame**. Ce quiz à choix multiple se base sur des questions de culture générale et propose 4 niveaux de difficulté pour défier vos connaissances !
+Bienvenue dans notre projet **Incredible Quiz** développé sous **Python** avec la bibliothèque **Pygame**. Ce quiz à choix multiple se base sur des questions de culture générale et propose 4 niveaux de difficulté pour défier vos connaissances !
 
 ## Fonctionnalités
 
