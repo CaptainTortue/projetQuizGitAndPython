@@ -184,6 +184,12 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if time_left <= 0 :
+            numberQuestion += 1
+            displayIncorrectAnimation = True
+            combo = 0
+            start_ticks = pygame.time.get_ticks() + 1000  # Game start time
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if isEnd:
                 pseudo, difficulty, running = menu()
@@ -213,6 +219,7 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
                             combo = 0
                             displayIncorrectAnimation = True
                             start_ticks = pygame.time.get_ticks() + 1000  # Game start time
+                            
     return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question, difficulty
 
 # Function to display the main menu
