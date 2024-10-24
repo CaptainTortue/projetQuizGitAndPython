@@ -76,7 +76,7 @@ clock = pygame.time.Clock()
 running = True
 
 
-# Define the RGB value for white, green, blue, and red
+# Define the RGB value for black, white, green, blue, and red
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
@@ -91,6 +91,10 @@ screen_height = 720
 
 # Create the display surface object of specific dimensions
 screen = pygame.display.set_mode((screen_width, screen_height))
+
+#set icon
+icon = pygame.image.load('logo_quiz.png')
+pygame.display.set_icon(icon)
 
 # Set the pygame window name
 pygame.display.set_caption('Incredible Quiz')
@@ -108,7 +112,7 @@ def refreshQuestion(numQuestion, questions):
     text = font.render(question["question"], True, BLACK)
     textRect = text.get_rect()
     if textRect.width > screen_width:
-        text = miniFont.render(question["question"], True, green, blue)
+        text = miniFont.render(question["question"], True, BLACK)
         textRect = text.get_rect()
     textRect.center = (screen_width // 2, screen_height // 6)
     options = []
@@ -166,7 +170,7 @@ def displayEndScreen(screen, score, pseudo, total_time_left, one_execution):
     end_text = font.render(f"Partie finie! Score: {score}.", True, white)
     screen.blit(end_text, (screen_width // 2 - end_text.get_rect().width // 2,
                            screen_height // 2 - end_text.get_rect().height // 2))
-    
+
     if one_execution == 0:
         pygame.mixer.music.stop()
         pygame.mixer.music.load("ENDINGPRO.mp3")
@@ -219,7 +223,7 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
                             combo = 0
                             displayIncorrectAnimation = True
                             start_ticks = pygame.time.get_ticks() + 1000  # Game start time
-                            
+
     return running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question, difficulty
 
 # Function to display the main menu
@@ -433,7 +437,7 @@ def main():
     pseudo, difficulty, running = menu()
 
 
-    
+
 
     if running:
         one_execution = 0
