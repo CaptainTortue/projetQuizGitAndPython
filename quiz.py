@@ -215,11 +215,6 @@ def handleEvents(running, isEnd, options, question, score, combo, numberQuestion
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if time_left <= 0 :
-            numberQuestion += 1
-            displayIncorrectAnimation = True
-            combo = 0
-            start_ticks = pygame.time.get_ticks() + 1000  # Game start time
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if isEnd:
@@ -496,7 +491,7 @@ def main():
 
     while running:
         elapsed_time = pygame.time.get_ticks() - start_ticks  # Time elapsed since the start of the question
-        time_left = max(0, timer_duration - elapsed_time) // 1000  # Remaining time for the question (in seconds)
+        time_left = max(-1, timer_duration - elapsed_time) // 1000  # Remaining time for the question (in seconds)
 
         # Calculate the total elapsed time for the score and JSON data
         elapsed_time_total = pygame.time.get_ticks() - total_ticks
@@ -506,6 +501,12 @@ def main():
         running, isEnd, score, combo, numberQuestion, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, pseudo, questions, one_execution, displayCorrectAnimation, displayIncorrectAnimation, textRect, optionsRect, options, text, question, difficulty = handleEvents(
             running, isEnd, options, question, score, combo, numberQuestion, time_left, displayCorrectAnimation, displayIncorrectAnimation, start_ticks, difficulty, pseudo, questions, one_execution, textRect, optionsRect, text
         )
+
+        if time_left < 0 :
+            numberQuestion += 1
+            displayIncorrectAnimation = True
+            combo = 0
+            start_ticks = pygame.time.get_ticks() + 1000  # Game start time
 
         # Display elements based on the current game state
         if isEnd:
